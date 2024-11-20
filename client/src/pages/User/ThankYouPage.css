@@ -1,0 +1,85 @@
+/* Container styling */
+.thank-you-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 70vh;
+  font-family: 'Poppins', sans-serif;
+  color: #333;
+  background-color: #f7f9fc;
+  /* padding: 20px; */
+}
+
+/* Icon styling */
+.icon-container {
+  margin-bottom: 20px;
+}
+
+.email-icon {
+  width: 120px;
+  height: 120px;
+}
+
+/* Main heading styling */
+h1 {
+  font-size: 2.5rem;
+  color: #3a3a3a;
+  margin: 10px 0;
+  font-weight: 700;
+}
+
+/* Subtext styling */
+.subtext {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+/* Button styling */
+.back-home-button {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 25px;
+  /* background-color: #304fa779; */
+  background-color: #193e40;
+  color: white;
+  text-decoration: none;
+  border-radius: 25px;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+.back-home-button:hover {
+  background-color: #132e4f;
+  color: white;
+}
+
+/* Contact message styling */
+.contact-message {
+  font-size: 1.5rem;
+  color: #666;
+  margin-top: 20px;
+}
+
+.contact-message a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.contact-message a:hover {
+  text-decoration: underline;
+}
+
+h1 {
+  font-size: 7rem;
+  color: #3a3a3a;
+  font-family: 'Dancing Script', cursive;
+  /* Decorative font */
+  font-weight: 700;
+  margin: 30px 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
