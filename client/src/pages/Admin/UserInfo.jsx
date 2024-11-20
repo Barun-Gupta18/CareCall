@@ -1,55 +1,26 @@
-import { useForm } from "react-hook-form";
-import axios from "axios";
 import { useState, useEffect } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { utilityFunctions } from "../../utils/module";
-import { Server_URL } from "../../../utils/config";
-import { showErrorToast, showSuccessToast } from "../../utils/Toasthelper";
+import { Server_URL, Server_URL2 } from "../../utils/config";
+import { showErrorToast } from "../../utils/Toasthelper";
 
 function ShowUsers() {
-  const [user, setUser] = useState([]);
+  const [users, setUsers] = useState([]);
   const navigate = useNavigate();
 
   // Fetch user data
   async function getUserData() {
     try {
-      const token = utilityFunctions.getCookieValue('adminAuthToken');
-      const url = Server_URL + "show-all-user";
+      const token = utilityFunctions.getCookieValue("adminAuthToken");
+      const url = `${Server_URL}show-all-user`;
       const response = await axios.get(url, {
-        headers: {
-          Authorization: token ? `Bearer ${token}` : ""
-        }
+        headers: { Authorization: token ? `Bearer ${token}` : "" },
       });
       const { error, message, result } = response.data;
-      if (error && message === "SignIn") {
-        navigate('/user-login');
-      } else if (error) {
-        showErrorToast(message);
-      } else {
-        setUser(result);
-      }
-    } catch (error) {
-      showErrorToast(error.message);
-    }
-  }
-
-  // Delete user
-  async function deleteUser(id) {
-    try {
-      const token = utilityFunctions.getCookieValue('adminAuthToken');
-      const url = Server_URL + "admin-manage-user/" + id;
-      const res = await axios.delete(url, {
-        headers: {
-          Authorization: token ? `Bearer ${token}` : ""
-        }
-      });
-      const { error, message } = res.data;
-      if (error && message === "SignIn") {
-        navigate('/user-login');
-      } else if (error) {
-        showErrorToast(message);
-        getUserData();
-      }
+      if (error && message === "SignIn") navigate("/user-login");
+      else if (error) showErrorToast(message);
+      else setUsers(result);
     } catch (error) {
       showErrorToast(error.message);
     }
@@ -61,108 +32,92 @@ function ShowUsers() {
 
   return (
     <>
+      <div className="container my-5">
+        <h2 className="text-center mb-4">User List</h2>
+        <div className="row">
+          {users.map((user, index) => (
+            <div className="col-md-6 col-lg-4 mb-4" key={index}>
+              <div className="custom-card shadow">
+                <div className="custom-card-header">
+                  <img
+                    src={`${Server_URL2}${user.photo}`}
+                    alt={user.fullName}
+                    className="custom-card-img"
+                  />
+                </div>
+                <div className="custom-card-body">
+                  <h5 className="custom-card-title">{user.fullName}</h5>
+                  <p className="custom-card-text">
+                    <strong>Email:</strong> {user.email} <br />
+                    <strong>Mobile:</strong> {user.mobile} <br />
+                    <strong>Address:</strong> {user.address}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
       <style>
         {`
-          .view-city-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
+          .custom-card {
             background-color: #f9f9f9;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease-in-out;
           }
 
-          .view-city-title {
-            font-size: 28px;
-            font-weight: bold;
-            color: #333;
-            text-align: center;
-            margin-bottom: 20px;
+          .custom-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
           }
 
-          .table-responsive {
-            overflow-x: auto;
+          .custom-card-header {
+            background-color: #e0f7fa;
+            padding: 0;
           }
 
-          .custom-table {
+          .custom-card-img {
             width: 100%;
-            border-collapse: collapse;
-          }
-
-          .custom-table thead th {
-            background-color: #193e40;
-            color: white;
-            font-weight: bold;
-            padding: 12px;
-            text-align: left;
-            font-size: 16px;
-          }
-
-          .custom-table tbody tr {
-            transition: background-color 0.3s;
-          }
-
-          .custom-table tbody tr:hover {
-            background-color: #f1f1f1;
-          }
-
-          .custom-table tbody td {
-            padding: 12px;
+            height: 200px;
+            object-fit: cover;
             border-bottom: 1px solid #ddd;
-            font-size: 15px;
+          }
+
+          .custom-card-body {
+            padding: 15px;
+          }
+
+          .custom-card-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #193e40;
+            margin-bottom: 10px;
+          }
+
+          .custom-card-text {
+            font-size: 14px;
             color: #555;
+            line-height: 1.6;
           }
 
-          .delete-btn {
-            padding: 6px 12px;
-            background-color: #e74c3c;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-          }
+          @media (max-width: 768px) {
+            .custom-card-img {
+              height: 150px;
+            }
 
-          .delete-btn:hover {
-            background-color: #c0392b;
+            .custom-card-title {
+              font-size: 18px;
+            }
+
+            .custom-card-text {
+              font-size: 13px;
+            }
           }
         `}
       </style>
-      <div className="view-city-container">
-        <h1 className="view-city-title">User List</h1>
-        <div className="table-responsive">
-          <table className="table table-striped custom-table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Mobile</th>
-                <th>Address</th>
-                <th>Delete</th>
-              </tr>
-            </thead>
-            <tbody>
-              {user.map((value, index) => (
-                <tr key={index}>
-                  <td>{value.fullName}</td>
-                  <td>{value.email}</td>
-                  <td>{value.mobile}</td>
-                  <td>{value.address}</td>
-                  <td>
-                    <button
-                      type="button"
-                      onClick={() => deleteUser(value._id)}
-                      className="delete-btn"
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
     </>
   );
 }

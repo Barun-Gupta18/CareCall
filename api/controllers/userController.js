@@ -72,8 +72,8 @@ userController.UserForgotPassword = async (req, res) => {
       const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-          user: 'gvarun9814@gmail.com',
-          pass: 'ronyxxhmbjqcdhok',  // Gmail app password (not the actual account password)
+          // user: /* pass here gmail id which one send the otp to custmoer*/ 
+          // pass: /* pass here the password of gmail which is pass in above  */  // Gmail app password (not the actual account password)
         },
       });
 

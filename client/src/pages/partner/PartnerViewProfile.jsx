@@ -91,35 +91,36 @@ function ViewPartner() {
     }
   }
 
-
-
-  async function onSubmit(data) {
+  // Upload Partner Photo
+  const onSubmitPhoto = async (data) => {
     try {
       console.log(data)
       const formData = new FormData();
       formData.append("photo", data.photo[0]);
 
-      const token = utilityFunctions.getCookieValue('partnerAuthToken');
-      const url = Server_URL + "partner-manage-photo";
+      const token = utilityFunctions.getCookieValue("partnerAuthToken");
+      const url = `${Server_URL}partner-manage-photo`;
+
       const res = await axios.post(url, formData, {
         headers: {
-          Authorization: token ? `Bearer ${token}` : ""
-        }
+          Authorization: token ? `Bearer ${token}` : "",
+          "Content-Type": "multipart/form-data",
+        },
       });
+
       const { error, message } = res.data;
-      if (error && message === "SignIn") {
-        navigate('/partner-login');
-      } else if (error) {
-        showErrorToast(message);
+      if (error) {
+        if (message === "SignIn") navigate("/partner-login");
+        else showErrorToast(message);
       } else {
+        // showSuccessToast(message);
         getPartnerData();
-        reset();
         handleClose();
       }
-    } catch (error) {
-      showErrorToast(error.message)
+    } catch (err) {
+      showErrorToast(err.message || "Failed to upload photo");
     }
-  }
+  };
 
   async function deletePartner(id) {
     try {
@@ -164,7 +165,7 @@ function ViewPartner() {
                       </td>
                       <td className="text-end">
                         <button className="btn btn-primary" onClick={handleShow1}>Edit<span>     </span><FaUserEdit /></button>
-                        <button className="btn btn-danger mx-3" onClick={() => deletePartner(partner._id)}>Delete<span>     </span><FaUserEdit /></button>
+                        {/* <button className="btn btn-danger mx-3" onClick={() => deletePartner(partner._id)}>Delete<span>     </span><FaUserEdit /></button> */}
 
                       </td>
                     </tr>
@@ -191,14 +192,14 @@ function ViewPartner() {
                       <th className="text-end" style={{ color: '#FFFFFF' }}>Service :</th>
                       <td style={{ color: '#FFFFFF' }}>{partner.subcategoryInfo}</td>
                     </tr>
-                    <tr>
+                    {/* <tr>
                       <th className="text-end" style={{ color: '#FFFFFF' }}>State :</th>
                       <td style={{ color: '#FFFFFF' }}>{partner.stateInfo}</td>
                     </tr>
                     <tr>
                       <th className="text-end" style={{ color: '#FFFFFF' }}>City :</th>
                       <td style={{ color: '#FFFFFF' }}>{partner.cityInfo}</td>
-                    </tr>
+                    </tr> */}
                     <tr>
                       <th className="text-end" style={{ color: '#FFFFFF' }}>Status :</th>
                       <td style={{ color: '#FFFFFF' }}>{partner.status}</td>
@@ -220,15 +221,27 @@ function ViewPartner() {
         </Row>
       </Container>
 
-      <Modal show={show} onHide={handleClose} centered >
+      {/* Modal for Photo Upload */}
+      <Modal
+        show={show}
+        onHide={handleClose}
+        centered
+      >
         <Modal.Header closeButton>
           <Modal.Title>Upload Image</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmitPhoto)}>
             <div className="mb-3">
-              <label htmlFor="photo">photo</label>
-              <input type="file" {...register('photo')} className="form-control" />
+              <label>Photo</label>
+              <input
+                type="file"
+                {...register("photo", { required: "Photo is required" })}
+                className="form-control"
+              />
+              {errors.photo && (
+                <p className="text-danger">{errors.photo.message}</p>
+              )}
             </div>
             <button className="btn btn-primary">Upload</button>
           </form>

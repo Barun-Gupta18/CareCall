@@ -18,6 +18,7 @@ function addCity() {
     formState: { errors },
     reset,
     setFocus,
+    setValue,
   } = useForm();
 
   const [state, setState] = useState([]);
@@ -105,24 +106,33 @@ function addCity() {
                     <span className="input-group-text" style={styles.iconContainer}><FaCity /></span>
                     <input
                       {...register("cityname", {
-                        required: true, validate: (value) => {
-                          const trimmedValue = value.trim().replace(/\s+/g, " "); // Trim and remove extra spaces
-                          return /^[A-Za-z]+(?: [A-Za-z]+)*$/.test(trimmedValue)
+                        required: "city name is required",
+                        validate: (value) => {
+                          const sanitizedValue = value.trim().replace(/\s+/g, " "); // Trim and allow only single spaces
+                          const namePattern = /^[A-Za-z]+(?: [A-Za-z]+)*$/; // Validates single or multiple words with one space between
+                          return namePattern.test(sanitizedValue)
                             ? true
-                            : "Enter a valid name with only one space between words and no extra spaces";
-                        },
-                        onChange: (e) => {
-                          // Dynamically sanitize input value
-                          e.target.value = e.target.value.trimStart().replace(/\s+/g, " ");
+                            : "Enter a valid city  with only one space between words and no extra spaces";
                         },
                       })}
                       className="form-control"
                       type="text"
-                      placeholder="Enter your city name"
-                      style={styles.input}
+                      placeholder="Enter your City name"
+                      onChange={(e) => {
+                        // Dynamically sanitize the input value
+                        const sanitizedValue = e.target.value
+                          .trimStart()
+                          .replace(/\s+/g, " ");
+                        setValue("cityname", sanitizedValue, { shouldValidate: true });
+                      }}
+                      onBlur={(e) => {
+                        // Remove trailing spaces when the field loses focus
+                        const sanitizedValue = e.target.value.trim();
+                        setValue("cityname", sanitizedValue, { shouldValidate: true });
+                      }}
                     />
                   </div>
-                  {errors.city && <p className="text-danger">This field is required</p>}
+                  {errors.cityname && <p className="text-danger">This field is required</p>}
                 </div><br />
 
                 <div className="mb-3">
@@ -141,7 +151,7 @@ function addCity() {
                         },
                       })}
                       className="form-control"
-                      type="text"
+                      type="number"
                       placeholder="Enter your city pincode"
                       style={styles.input}
                     />

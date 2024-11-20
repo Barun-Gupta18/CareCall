@@ -76,19 +76,36 @@ function UserRegister() {
               {/* Full Name */}
               <div className="mt-2 mb-3">
                 <div className="input-group">
-                  <span className="input-group-text" style={styles.iconContainer}><IoManSharp /></span>
-                  <input {...register("fullName", {
-                    required: "Full Name is required", validate: (value) => {
-                      const trimmedValue = value.trim().replace(/\s+/g, " "); // Trim and remove extra spaces
-                      return /^[A-Za-z]+(?: [A-Za-z]+)*$/.test(trimmedValue)
-                        ? true
-                        : "Enter a valid name with only one space between words and no extra spaces";
-                    },
-                    onChange: (e) => {
-                      // Dynamically sanitize input value
-                      e.target.value = e.target.value.trimStart().replace(/\s+/g, " ");
-                    },
-                  })} className="form-control" type="text" placeholder="Enter your Full Name" />
+                  <span className="input-group-text" style={styles.iconContainer}>
+                    <IoManSharp />
+                  </span>
+                  <input
+                    {...register("fullName", {
+                      required: "Full Name is required",
+                      validate: (value) => {
+                        const sanitizedValue = value.trim().replace(/\s+/g, " "); // Trim and allow only single spaces
+                        const namePattern = /^[A-Za-z]+(?: [A-Za-z]+)*$/; // Validates single or multiple words with one space between
+                        return namePattern.test(sanitizedValue)
+                          ? true
+                          : "Enter a valid name with only one space between words and no extra spaces";
+                      },
+                    })}
+                    className="form-control"
+                    type="text"
+                    placeholder="Enter your Full Name"
+                    onChange={(e) => {
+                      // Dynamically sanitize the input value
+                      const sanitizedValue = e.target.value
+                        .trimStart()
+                        .replace(/\s+/g, " ");
+                      setValue("fullName", sanitizedValue, { shouldValidate: true });
+                    }}
+                    onBlur={(e) => {
+                      // Remove trailing spaces when the field loses focus
+                      const sanitizedValue = e.target.value.trim();
+                      setValue("fullName", sanitizedValue, { shouldValidate: true });
+                    }}
+                  />
                 </div>
                 {errors.fullName && <p className="text-danger">{errors.fullName.message}</p>}
               </div><br />
@@ -116,20 +133,23 @@ function UserRegister() {
               <div className="mt-2 mb-3">
                 <div className="input-group">
                   <span className="input-group-text" style={styles.iconContainer}><FaLock /></span>
-                  <input {...register("password", {
-                    required: "Password is required", validate: (value) => {
-                      const trimmedValue = value.trim();
-                      if (trimmedValue.length < 2) return "Password must be at least 2 characters";
-                      if (trimmedValue.length > 6) return "Password must not exceed 6 characters";
-                      return true;
-                    },
-                    onChange: (e) => {
-                      e.target.value = e.target.value.trimStart();
-                    },
-                  })} className="form-control" type="password" placeholder="Enter your Password" />
+                  <input
+                    {...register("password", {
+                      required: "Password is required",
+                      validate: (value) => {
+                        if (value.length < 2) return "Password must be at least 2 characters";
+                        if (value.length > 6) return "Password must not exceed 6 characters";
+                        return true;
+                      },
+                    })}
+                    className="form-control"
+                    type="password"
+                    placeholder="Enter your Password"
+                    onInput={(e) => e.target.value = e.target.value.replace(/\s/g, '')} // Remove spaces on input
+                  />
                 </div>
                 {errors.password && <p className="text-danger">{errors.password.message}</p>}
-              </div><br />
+              </div> <br />
 
               {/* Mobile Number */}
               <div className="mt-2 mb-3">

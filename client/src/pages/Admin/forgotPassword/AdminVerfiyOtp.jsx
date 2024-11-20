@@ -34,7 +34,7 @@ function AdminVerifyOTP() {
           showErrorToast(message);
         }
       } else {
-        showSuccessToast(message);
+        // showSuccessToast(message);
         navigate("/admin-reset-password");
       }
     } catch (e) {
@@ -47,39 +47,11 @@ function AdminVerifyOTP() {
   }, []);
 
   return (
-    //     <div className="container py-5">
-    //       <h3 style={{ textAlign: 'center' }}>Verify OTP</h3>
-    //       <div className="row">
-    //         <div className="col-md-8 offset-md-2">
-    //           <div className="card shadow-lg">
-    //             <div className="card-body">
-    //               <form onSubmit={handleSubmit(onSubmit)}>
-    //                 <div className="mb-3">
-    //                   <label>Enter OTP</label>
-    //                   <input
-    //                     {...register("otp", { required: true })}
-    //                     className="form-control"
-    //                     type="text"
-    //                     placeholder="Enter the OTP sent to your email"
-    //                   />
-    //                   <br />
-    //                   {errors.otp && <p className="text-danger">This field is required</p>}
-    //                 </div>
-    //                 <button className="btn btn-warning mt-2">Verify OTP</button>
-    //               </form>
-    //             </div>
-    //           </div>
-    //         </div>
-    //       </div>
-    //     </div>
-    //   );
-    // }
-
     <Container fluid className="d-flex justify-content-center align-items-center min-vh-100" style={styles.background}>
       <Row className="w-100 d-flex justify-content-center align-items-center">
         <Col md={8} lg={6} className="d-flex justify-content-center align-items-center">
           <div style={styles.formContainer}>
-            <h3 className="text-center mb-4" style={styles.headerText}>Verify OTP</h3>
+            <h3 className="text-center mb-4" style={styles.headerText}>Verify OTP</h3><br />
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="mb-3">
                 <div className="input-group">

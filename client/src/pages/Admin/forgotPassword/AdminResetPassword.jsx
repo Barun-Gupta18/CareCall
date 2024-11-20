@@ -47,77 +47,54 @@ function AdminResetPassword() {
   }, []);
 
   return (
-    //     <div className="container py-5">
-    //       <h3 style={{ textAlign: 'center' }}>Reset Password</h3>
-    //       <div className="row">
-    //         <div className="col-md-8 offset-md-2">
-    //           <div className="card shadow-lg">
-    //             <div className="card-body">
-    //               <form onSubmit={handleSubmit(onSubmit)}>
-    //                 <div className="mb-3">
-    //                   <label>New Password</label>
-    //                   <input
-    //                     {...register("newpassword", { required: true })}
-    //                     className="form-control"
-    //                     type="password"
-    //                     placeholder="Enter your New Password"
-    //                   />
-    //                   <br />
-    //                   {errors.newpassword && <p className="text-danger">This field is required</p>}
-    //                 </div>
-    //                 <div className="mb-3">
-    //                   <label>Confirm Password</label>
-    //                   <input
-    //                     {...register("confirmpassword", { required: true })}
-    //                     className="form-control"
-    //                     type="password"
-    //                     placeholder="Confirm your New Password"
-    //                   />
-    //                   <br />
-    //                   {errors.confirmpassword && <p className="text-danger">This field is required</p>}
-    //                 </div>
-    //                 <button className="btn btn-warning mt-2">Reset Password</button>
-    //               </form>
-    //             </div>
-    //           </div>
-    //         </div>
-    //       </div>
-    //     </div>
-    //   );
-    // }
-
     <Container fluid className="d-flex justify-content-center align-items-center min-vh-100" style={styles.background}>
       <Row className="w-100 d-flex justify-content-center align-items-center">
         <Col md={8} lg={6} className="d-flex justify-content-center align-items-center">
           <div style={styles.formContainer}>
-            <h3 className="text-center mb-4" style={styles.headerText}>Reset password</h3>
+            <h3 className="text-center mb-4" style={styles.headerText}>Reset password</h3><br />
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="mb-3">
                 <div className="input-group">
                   <span className="input-group-text" style={styles.iconContainer}><FaLock /></span>
                   <input
-                    {...register("newpassword", { required: true })}
+                    {...register("newpassword", {
+                      required: "Password is required",
+                      validate: (value) => {
+                        if (value.length < 2) return "Password must be at least 2 characters";
+                        if (value.length > 6) return "Password must not exceed 6 characters";
+                        return true;
+                      },
+                    })}
                     className="form-control"
                     type="password"
-                    placeholder="Enter new password"
+                    placeholder="Enter your new password"
                     style={styles.input}
+                    onInput={(e) => e.target.value = e.target.value.replace(/\s/g, '')} // Remove spaces on input
                   />
                 </div>
                 {errors.newpassword && <p className="text-danger">This field is required</p>}
-              </div>
+              </div><br />
               <div className="mb-3">
                 <div className="input-group">
                   <span className="input-group-text" style={styles.iconContainer}><FaLock /></span>
                   <input
-                    {...register("confirmpassword", { required: true })}
+                    {...register("confirmpassword", {
+                      required: "Password is required",
+                      validate: (value) => {
+                        if (value.length < 2) return "Password must be at least 2 characters";
+                        if (value.length > 6) return "Password must not exceed 6 characters";
+                        return true;
+                      },
+                    })}
                     className="form-control"
                     type="password"
-                    placeholder="Confirm your new password"
+                    placeholder="Enter your password again"
                     style={styles.input}
+                    onInput={(e) => e.target.value = e.target.value.replace(/\s/g, '')} // Remove spaces on input
                   />
                 </div>
                 {errors.confirmpassword && <p className="text-danger">This field is required</p>}
-              </div>
+              </div><br />
               <button className="btn w-100" style={styles.button}>Reset</button>
             </form>
           </div>

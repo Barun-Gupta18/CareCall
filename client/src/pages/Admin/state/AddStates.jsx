@@ -16,6 +16,7 @@ function addState() {
     formState: { errors },
     reset,
     setFocus,
+    setValue,
   } = useForm();
 
 
@@ -63,22 +64,30 @@ function addState() {
                     <span className="input-group-text" style={styles.iconContainer}><MdRealEstateAgent /></span>
                     <input
                       {...register("statename", {
-                        required: true,
+                        required: "state is required",
                         validate: (value) => {
-                          const trimmedValue = value.trim().replace(/\s+/g, " "); // Trim and remove extra spaces
-                          return /^[A-Za-z]+(?: [A-Za-z]+)*$/.test(trimmedValue)
+                          const sanitizedValue = value.trim().replace(/\s+/g, " "); // Trim and allow only single spaces
+                          const namePattern = /^[A-Za-z]+(?: [A-Za-z]+)*$/; // Validates single or multiple words with one space between
+                          return namePattern.test(sanitizedValue)
                             ? true
-                            : "Enter a valid name with only one space between words and no extra spaces";
-                        },
-                        onChange: (e) => {
-                          // Dynamically sanitize input value
-                          e.target.value = e.target.value.trimStart().replace(/\s+/g, " ");
+                            : "Enter a valid state with only one space between words and no extra spaces";
                         },
                       })}
                       className="form-control"
-                      type="tel"
-                      placeholder="Enter your state name"
-                      style={styles.input}
+                      type="text"
+                      placeholder="Enter your state Name"
+                      onChange={(e) => {
+                        // Dynamically sanitize the input value
+                        const sanitizedValue = e.target.value
+                          .trimStart()
+                          .replace(/\s+/g, " ");
+                        setValue("statename", sanitizedValue, { shouldValidate: true });
+                      }}
+                      onBlur={(e) => {
+                        // Remove trailing spaces when the field loses focus
+                        const sanitizedValue = e.target.value.trim();
+                        setValue("statename", sanitizedValue, { shouldValidate: true });
+                      }}
                     />
                   </div>
                   {errors.statename && <p className="text-danger">This field is required</p>}

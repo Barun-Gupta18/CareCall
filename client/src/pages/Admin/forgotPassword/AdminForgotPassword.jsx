@@ -49,7 +49,7 @@ function AdminForgetPassword() {
       <Row className="w-100 d-flex justify-content-center align-items-center">
         <Col md={8} lg={6} className="d-flex justify-content-center align-items-center">
           <div style={styles.formContainer}>
-            <h3 className="text-center mb-4" style={styles.headerText}>Forgot password</h3>
+            <h3 className="text-center mb-4" style={styles.headerText}>Forgot password</h3><br />
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="mb-3">
                 <div className="input-group">

@@ -1,7 +1,6 @@
-import { useForm } from "react-hook-form";
-import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import { utilityFunctions } from "../../utils/module";
 import { Server_URL } from "../../../utils/config";
 import { showErrorToast, showSuccessToast } from "../../utils/Toasthelper";
@@ -15,13 +14,13 @@ function ShowPartner() {
   // Fetch partner data
   async function getPartnerData() {
     try {
-      const token = utilityFunctions.getCookieValue('adminAuthToken');
+      const token = utilityFunctions.getCookieValue("adminAuthToken");
       const url = `${Server_URL}show-all-partner`;
       const response = await axios.get(url, {
-        headers: { Authorization: token ? `Bearer ${token}` : "" }
+        headers: { Authorization: token ? `Bearer ${token}` : "" },
       });
       const { error, message, result } = response.data;
-      if (error && message === "SignIn") navigate('/admin-login');
+      if (error && message === "SignIn") navigate("/admin-login");
       else if (error) showErrorToast(message);
       else setPartner(result);
     } catch (error) {
@@ -33,16 +32,16 @@ function ShowPartner() {
   const handleStatusUpdate = async (id, currentStatus) => {
     setLoading(true);
     try {
-      const token = utilityFunctions.getCookieValue('adminAuthToken');
-      const newStatus = currentStatus === 'active' ? 'In-active' : 'active';
+      const token = utilityFunctions.getCookieValue("adminAuthToken");
+      const newStatus = currentStatus === "active" ? "In-active" : "active";
       const url = `${Server_URL}admin-status-update/${id}`;
       const data = { status: newStatus };
       const res = await axios.put(url, data, {
-        headers: { Authorization: token ? `Bearer ${token}` : "" }
+        headers: { Authorization: token ? `Bearer ${token}` : "" },
       });
 
       const { error, message } = res.data;
-      if (error && message === "SignIn") navigate('/admin-login');
+      if (error && message === "SignIn") navigate("/admin-login");
       else if (error) showErrorToast(message);
       else {
         showSuccessToast(message);
@@ -58,69 +57,42 @@ function ShowPartner() {
     }
   };
 
-  // Delete partner
-  async function deletePartner(id) {
-    try {
-      const token = utilityFunctions.getCookieValue('adminAuthToken');
-      const url = `${Server_URL}admin-manage-partner/${id}`;
-      const res = await axios.delete(url, {
-        headers: { Authorization: token ? `Bearer ${token}` : "" }
-      });
-      const { error, message } = res.data;
-      if (error && message === "SignIn") navigate('/admin-login');
-      else if (error) showErrorToast(message);
-      else getPartnerData();
-    } catch (error) {
-      showSuccessToast(error.message);
-    }
-  }
-
   useEffect(() => {
     getPartnerData();
   }, []);
 
   return (
     <>
-      <div
-        className="container my-5"
-        style={{ overflowX: "auto", whiteSpace: "nowrap" }}
-      >
-        <h2 className="text-center mb-4">Partners List</h2>
-        <table className="table ">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Mobile</th>
-              <th>Category</th>
-              <th>Sub-category</th>
-              <th>State</th>
-              <th>City</th>
-              <th>Address</th>
-              <th>Status</th>
-              <th>Start</th>
-              <th>End</th>
-              <th>Price</th>
-              <th>Photo</th>
-              <th>Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-            {partner.map((value, index) => (
-              <tr key={index}>
-                <td>{value.fullname}</td>
-                <td>{value.email}</td>
-                <td>{value.mobile}</td>
-                <td>{value.categoryInfo}</td>
-                <td>{value.subcategoryInfo}</td>
-                <td>{value.stateInfo}</td>
-                <td>{value.cityInfo}</td>
-                <td>{value.address}</td>
-                <td>
+      <div className="container my-5">
+        <h2 className="text-center mb-4">Service Provider View</h2>
+        <div className="row">
+          {partner.map((value, index) => (
+            <div className="col-md-6 col-lg-4 mb-4" key={index}>
+              <div className="custom-card shadow-sm">
+                <img
+                  src={`${Server_URL2}${value.photo}`}
+                  alt={value.fullname}
+                  className="custom-card-img"
+                />
+                <div className="custom-card-body">
+                  <h5 className="custom-card-title">{value.fullname}</h5>
+                  <p className="custom-card-text">
+                    <strong>Email:</strong> {value.email} <br />
+                    <strong>Mobile:</strong> {value.mobile} <br />
+                    <strong>Category:</strong> {value.categoryInfo} <br />
+                    <strong>Sub-category:</strong> {value.subcategoryInfo} <br />
+                    <strong>State:</strong> {value.stateInfo} <br />
+                    <strong>City:</strong> {value.cityInfo} <br />
+                    <strong>Address:</strong> {value.address} <br />
+                    <strong>Price:</strong> ₹{value.price} <br />
+                    <strong>Start Time:</strong> {value.starttime} <br />
+                    <strong>End Time:</strong> {value.endtime}
+                  </p>
                   <button
                     onClick={() => handleStatusUpdate(value._id, value.status)}
                     disabled={loading}
-                    className={`status-btn ${value.status === "active" ? "status-active" : "status-inactive"}`}
+                    className={`btn btn-block ${value.status === "active" ? "btn-success" : "btn-danger"
+                      }`}
                   >
                     {loading
                       ? "Updating..."
@@ -128,117 +100,94 @@ function ShowPartner() {
                         ? "Activate"
                         : "Deactivate"}
                   </button>
-                </td>
-                <td>{value.starttime}</td>
-                <td>{value.endtime}</td>
-                <td>{value.price}</td>
-                <td>
-                  <img
-                    src={`${Server_URL2}${value.photo}`}
-                    alt="img"
-                    style={{ height: 75 }}
-                  />
-                </td>
-                <td>
-                  <button
-                    type="button"
-                    onClick={() => deletePartner(value._id)}
-                    className="btn btn-danger btn-sm me-5"
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
       <style>
         {`
-          // .container {
-          //   max-width: 1200px;
-          //   margin: 0 auto;
-          //   padding: 20px;
-          //   background-color: #f9f9f9;
-          //   border-radius: 10px;
-          //   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-          // }
+          .custom-card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+          }
 
-          .table {
+          .custom-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+          }
+
+          .custom-card-img {
             width: 100%;
-            margin-top: 20px;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid #ddd;
           }
 
-          .table thead th {
-            background-color: #193e40;
-            color: white;
-            font-weight: bold;
-            padding: 10px;
+          .custom-card-body {
+            padding: 15px;
+          }
+
+          .custom-card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #193e40;
+            margin-bottom: 10px;
+          }
+
+          .custom-card-text {
             font-size: 14px;
-          }
-
-           .table tbody td {
-            padding: 10px;
-            font-size: 13px;
             color: #555;
+            line-height: 1.6;
           }
 
-           .table tbody tr:hover {
-            background-color: #f1f1f1;
+          .btn {
+            display: block;
+            width: 100%;
+            padding: 10px 0;
+            font-size: 14px;
+            font-weight: 600;
+            text-align: center;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+          }
+
+          .btn-success {
+            background-color: #27ae60;
+            color: #fff;
+          }
+
+          .btn-success:hover {
+            background-color: #219150;
+            transform: scale(1.02);
           }
 
           .btn-danger {
             background-color: #e74c3c;
-            color: white;
-            border-radius: 5px;
-            transition: background-color 0.3s;
+            color: #fff;
           }
 
           .btn-danger:hover {
             background-color: #c0392b;
+            transform: scale(1.02);
           }
 
-          .status-btn {
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-          }
-
-          .status-active {
-            background-color: #27ae60;
-          }
-
-          .status-inactive {
-            background-color: #e74c3c;
-          }
-
-          /* Responsive adjustments */
           @media (max-width: 768px) {
-            .container {
-              padding: 10px;
+            .custom-card-img {
+              height: 150px;
             }
 
-            .table-dark thead th,
-            .table-dark tbody td {
-              font-size: 12px;
-              padding: 8px;
+            .custom-card-title {
+              font-size: 16px;
             }
 
-            .status-btn {
-              padding: 4px 8px;
-              font-size: 12px;
-            }
-          }
-
-          @media (max-width: 576px) {
-            .table-dark thead th,
-            .table-dark tbody td {
-              font-size: 10px;
-              padding: 5px;
+            .custom-card-text {
+              font-size: 13px;
             }
           }
         `}

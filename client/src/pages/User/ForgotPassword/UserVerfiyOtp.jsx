@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { Server_URL } from "../../../utils/config";
 import { useNavigate } from "react-router-dom";
 import { showSuccessToast, showErrorToast } from "../../../utils/Toasthelper";
+import { FaCommentDots } from "react-icons/fa";
+import { Container, Row, Col } from 'react-bootstrap';
 
 function UserVerifyOTP() {
   const navigate = useNavigate();
@@ -28,7 +30,7 @@ function UserVerifyOTP() {
       if (error) {
         showErrorToast(message);
       } else {
-        showSuccessToast(message);
+        // showSuccessToast(message);
         navigate("/user-reset-password");
       }
     } catch (e) {
@@ -41,31 +43,71 @@ function UserVerifyOTP() {
   }, []);
 
   return (
-    <div className="container py-5">
-      <h3 style={{ textAlign: 'center' }}>Verify OTP</h3>
-      <div className="row">
-        <div className="col-md-8 offset-md-2">
-          <div className="card shadow-lg">
-            <div className="card-body">
-              <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="mb-3">
-                  <label>Enter OTP</label>
+    <Container fluid className="d-flex justify-content-center align-items-center min-vh-100" style={styles.background}>
+      <Row className="w-100 d-flex justify-content-center align-items-center">
+        <Col md={8} lg={6} className="d-flex justify-content-center align-items-center">
+          <div style={styles.formContainer}>
+            <h3 className="text-center mb-4" style={styles.headerText}>Verify OTP</h3><br />
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div className="mb-3">
+                <div className="input-group">
+                  <span className="input-group-text" style={styles.iconContainer}><FaCommentDots /></span>
                   <input
                     {...register("otp", { required: true })}
                     className="form-control"
-                    type="text"
-                    placeholder="Enter the OTP sent to your email"
+                    type="number"
+                    placeholder="Enter OTP"
+                    style={styles.input}
                   />
-                  <br />
-                  {errors.otp && <p className="text-danger">This field is required</p>}
                 </div>
-                <button className="btn btn-warning mt-2">Verify OTP</button>
-              </form>
-            </div>
+                {errors.otp && <p className="text-danger">This field is required</p>}
+              </div><br />
+              <button type="submit" className="btn w-100" style={styles.button}>Verfiy</button>
+            </form>
           </div>
-        </div>
-      </div>
-    </div>
+        </Col>
+      </Row>
+    </Container>
   );
 }
+
+const styles = {
+  background: {
+    background: 'linear-gradient(135deg, #193e40, #132e4f)', // Gradient background
+    height: '100vh',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  formContainer: {
+    backgroundColor: 'rgba(0, 40, 72)', // Translucent background
+    borderRadius: '10px',
+    padding: '60px 40px', // Increased padding for larger form
+    width: '100%',
+    maxWidth: '500px', // Increased max width for larger form
+    backdropFilter: 'blur(10px)', // Blurring the background for effect
+    boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.2)',
+  },
+  headerText: {
+    color: '#FFFFFF',
+    fontWeight: 'bold',
+    fontSize: '28px', // Increased font size for more prominence
+  },
+  iconContainer: {
+    backgroundColor: '#FFFFFF',
+    border: 'none',
+  },
+  input: {
+    border: 'none',
+    paddingLeft: '10px',
+    fontSize: '16px', // Slightly larger text for better readability
+  },
+  button: {
+    background: 'linear-gradient(135deg, #4E54C8, #132e4f)',
+    color: '#FFFFFF',
+    border: 'none',
+    padding: '12px',
+    fontSize: '18px', // Larger button size
+  },
+};
 export default UserVerifyOTP;

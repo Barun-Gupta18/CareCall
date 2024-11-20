@@ -157,12 +157,11 @@ function ViewUser() {
                   <tbody>
                     <tr>
                       <td>
-                        <h3 style={{ color: '#FFFFFF' }}><b>Profile</b></h3>
+                        <h3 style={{ color: '#FFFFFF' }}><b>Profile Info</b></h3>
                       </td>
                       <td className="text-end">
                         <button className="btn btn-primary" onClick={handleShow1}>Edit<span>     </span><FaUserEdit /></button>
-                        <button className="btn btn-danger mx-3" onClick={() => deleteUser(user._id)}>Delete<span>     </span><FaUserEdit /></button>
-
+                        {/* <button className="btn btn-danger mx-3" onClick={() => deleteUser(user._id)}>Delete<span>     </span><FaUserEdit /></button> */}
                       </td>
                     </tr>
                     <tr>
@@ -184,7 +183,7 @@ function ViewUser() {
                       <th className="text-end" style={{ color: '#FFFFFF' }}>Mobile :</th>
                       <td style={{ color: '#FFFFFF' }}>{user.mobile}</td>
                     </tr>
-                    <tr>
+                    {/* <tr>
                       <th className="text-end" style={{ color: '#FFFFFF' }}>State :</th>
                       <td style={{ color: '#FFFFFF' }}>{user.stateInfo}</td>
                     </tr>
@@ -195,7 +194,7 @@ function ViewUser() {
                     <tr>
                       <th className="text-end" style={{ color: '#FFFFFF' }}>Pincode :</th>
                       <td style={{ color: '#FFFFFF' }}>{user.pincode}</td>
-                    </tr>
+                    </tr> */}
                     <tr>
                       <th className="text-end" style={{ color: '#FFFFFF' }}>Address :</th>
                       <td style={{ color: '#FFFFFF' }}>{user.address}</td>

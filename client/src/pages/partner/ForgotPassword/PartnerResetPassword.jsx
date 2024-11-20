@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { Server_URL } from "../../../../utils/config";
 import { useNavigate } from "react-router-dom";
 import { showErrorToast, showSuccessToast } from "../../../utils/Toasthelper";
+import { FaEnvelope, FaLock } from 'react-icons/fa';
+import { Container, Row, Col } from 'react-bootstrap';
 
 function PartnerResetPassword() {
   const navigate = useNavigate();
@@ -45,42 +47,100 @@ function PartnerResetPassword() {
   }, []);
 
   return (
-    <div className="container py-5">
-      <h3 style={{ textAlign: 'center' }}>Reset Password</h3>
-      <div className="row">
-        <div className="col-md-8 offset-md-2">
-          <div className="card shadow-lg">
-            <div className="card-body">
-              <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="mb-3">
-                  <label>New Password</label>
+    <Container fluid className="d-flex justify-content-center align-items-center min-vh-100" style={styles.background}>
+      <Row className="w-100 d-flex justify-content-center align-items-center">
+        <Col md={8} lg={6} className="d-flex justify-content-center align-items-center">
+          <div style={styles.formContainer}>
+            <h3 className="text-center mb-4" style={styles.headerText}>Reset password</h3><br />
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div className="mb-3">
+                <div className="input-group">
+                  <span className="input-group-text" style={styles.iconContainer}><FaLock /></span>
                   <input
-                    {...register("newpassword", { required: true })}
+                    {...register("newpassword", {
+                      required: "Password is required",
+                      validate: (value) => {
+                        if (value.length < 2) return "Password must be at least 2 characters";
+                        if (value.length > 6) return "Password must not exceed 6 characters";
+                        return true;
+                      },
+                    })}
                     className="form-control"
                     type="password"
-                    placeholder="Enter your New Password"
+                    placeholder="Enter your new password"
+                    style={styles.input}
+                    onInput={(e) => e.target.value = e.target.value.replace(/\s/g, '')} // Remove spaces on input
                   />
-                  <br />
-                  {errors.newpassword && <p className="text-danger">This field is required</p>}
                 </div>
-                <div className="mb-3">
-                  <label>Confirm Password</label>
+                {errors.newpassword && <p className="text-danger">This field is required</p>}
+              </div><br />
+              <div className="mb-3">
+                <div className="input-group">
+                  <span className="input-group-text" style={styles.iconContainer}><FaLock /></span>
                   <input
-                    {...register("confirmpassword", { required: true })}
+                    {...register("confirmpassword", {
+                      required: "Password is required",
+                      validate: (value) => {
+                        if (value.length < 2) return "Password must be at least 2 characters";
+                        if (value.length > 6) return "Password must not exceed 6 characters";
+                        return true;
+                      },
+                    })}
                     className="form-control"
                     type="password"
-                    placeholder="Confirm your New Password"
+                    placeholder="Enter your password again"
+                    style={styles.input}
+                    onInput={(e) => e.target.value = e.target.value.replace(/\s/g, '')} // Remove spaces on input
                   />
-                  <br />
-                  {errors.confirmpassword && <p className="text-danger">This field is required</p>}
                 </div>
-                <button className="btn btn-warning mt-2">Reset Password</button>
-              </form>
-            </div>
+                {errors.confirmpassword && <p className="text-danger">This field is required</p>}
+              </div><br />
+              <button className="btn w-100" style={styles.button}>Reset</button>
+            </form>
           </div>
-        </div>
-      </div>
-    </div>
+        </Col>
+      </Row>
+    </Container>
   );
 }
+
+const styles = {
+  background: {
+    background: 'linear-gradient(135deg, #193e40, #132e4f)', // Gradient background
+    height: '100vh',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  formContainer: {
+    backgroundColor: 'rgba(0, 40, 72)', // Translucent background
+    borderRadius: '10px',
+    padding: '60px 40px', // Increased padding for larger form
+    width: '100%',
+    maxWidth: '500px', // Increased max width for larger form
+    backdropFilter: 'blur(10px)', // Blurring the background for effect
+    boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.2)',
+  },
+  headerText: {
+    color: '#FFFFFF',
+    fontWeight: 'bold',
+    fontSize: '28px', // Increased font size for more prominence
+  },
+  iconContainer: {
+    backgroundColor: '#FFFFFF',
+    border: 'none',
+  },
+  input: {
+    border: 'none',
+    paddingLeft: '10px',
+    fontSize: '16px', // Slightly larger text for better readability
+  },
+  button: {
+    background: 'linear-gradient(135deg, #4E54C8, #132e4f)',
+    color: '#FFFFFF',
+    border: 'none',
+    padding: '12px',
+    fontSize: '18px', // Larger button size
+  },
+};
 export default PartnerResetPassword;

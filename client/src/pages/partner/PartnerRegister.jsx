@@ -93,22 +93,39 @@ function PartnerRegister() {
               {/* Full Name */}
               <div className="mt-2 mb-3">
                 <div className="input-group">
-                  <span className="input-group-text" style={styles.iconContainer}><IoManSharp /></span>
-                  <input {...register("fullName", {
-                    required: true, validate: (value) => {
-                      const trimmedValue = value.trim().replace(/\s+/g, " "); // Trim and remove extra spaces
-                      return /^[A-Za-z]+(?: [A-Za-z]+)*$/.test(trimmedValue)
-                        ? true
-                        : "Enter a valid name with only one space between words and no extra spaces";
-                    },
-                    onChange: (e) => {
-                      // Dynamically sanitize input value
-                      e.target.value = e.target.value.trimStart().replace(/\s+/g, " ");
-                    },
-                  })} className="form-control" type="text" placeholder="Enter your Full Name" />
+                  <span className="input-group-text" style={styles.iconContainer}>
+                    <IoManSharp />
+                  </span>
+                  <input
+                    {...register("fullname", {
+                      required: "Full Name is required",
+                      validate: (value) => {
+                        const sanitizedValue = value.trim().replace(/\s+/g, " "); // Trim and allow only single spaces
+                        const namePattern = /^[A-Za-z]+(?: [A-Za-z]+)*$/; // Validates single or multiple words with one space between
+                        return namePattern.test(sanitizedValue)
+                          ? true
+                          : "Enter a valid name with only one space between words and no extra spaces";
+                      },
+                    })}
+                    className="form-control"
+                    type="text"
+                    placeholder="Enter your Full Name"
+                    onChange={(e) => {
+                      // Dynamically sanitize the input value
+                      const sanitizedValue = e.target.value
+                        .trimStart()
+                        .replace(/\s+/g, " ");
+                      setValue("fullname", sanitizedValue, { shouldValidate: true });
+                    }}
+                    onBlur={(e) => {
+                      // Remove trailing spaces when the field loses focus
+                      const sanitizedValue = e.target.value.trim();
+                      setValue("fullname", sanitizedValue, { shouldValidate: true });
+                    }}
+                  />
                 </div>
-                {errors.fullName && <p className="text-danger">This field is required</p>}
-              </div><br />
+                {errors.fullname && <p className="text-danger">{errors.fullName.message}</p>}
+              </div> <br />
 
               {/* Email */}
               <div className="mt-2 mb-3">
@@ -143,7 +160,9 @@ function PartnerRegister() {
                     onChange: (e) => {
                       e.target.value = e.target.value.trimStart();
                     },
-                  })} className="form-control" type="password" placeholder="Enter your Password" />
+                  })} className="form-control" type="password" placeholder="Enter your Password"
+                    onInput={(e) => e.target.value = e.target.value.replace(/\s/g, '')} // Remove spaces on input
+                  />
                 </div>
                 {errors.password && <p className="text-danger">This field is required</p>}
               </div><br />

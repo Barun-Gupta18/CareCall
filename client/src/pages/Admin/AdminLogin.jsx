@@ -49,7 +49,7 @@ function AdminLogin() {
       <Row className="w-100 d-flex justify-content-center align-items-center">
         <Col md={8} lg={6} className="d-flex justify-content-center align-items-center">
           <div style={styles.formContainer}>
-            <h3 className="text-center mb-4" style={styles.headerText}>Login</h3>
+            <h3 className="text-center mb-4" style={styles.headerText}>Login</h3><br />
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="mb-3">
                 <div className="input-group">
@@ -61,7 +61,7 @@ function AdminLogin() {
                     placeholder="Email ID"
                     style={styles.input}
                   />
-                </div>
+                </div><br />
                 {errors.email && <p className="text-danger">This field is required</p>}
               </div>
               <div className="mb-3">
@@ -77,11 +77,7 @@ function AdminLogin() {
                 </div>
                 {errors.password && <p className="text-danger">This field is required</p>}
               </div>
-              <div className="d-flex justify-content-between mb-3">
-                <div className="form-check">
-                  <input className="form-check-input" type="checkbox" id="rememberMe" />
-                  <label className="form-check-label" htmlFor="rememberMe">Remember me</label>
-                </div>
+              <div className="d-flex justify-content-end mb-3">
                 <Link to="/admin-forgot-password" className="text-primary">Forgot Password?</Link>
               </div>
               <button className="btn w-100" style={styles.button}>Login</button>

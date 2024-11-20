@@ -73,7 +73,7 @@ function UserNavbar() {
 
                       <li><Link to="/partner/view-profile">Profile</Link></li>
 
-                      <li><Link to="/partner/dashboard">Bookings</Link>
+                      <li><Link to="/partner/confirm-booking">Bookings</Link>
                         <ul className="sub-menu">
                           <li>
                             <Link to='/partner/confirm-booking'>Confirmed</Link>

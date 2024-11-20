@@ -19,6 +19,7 @@ function AdminRegister() {
     formState: { errors },
     reset,
     setFocus,
+    setValue,
   } = useForm();
 
 
@@ -56,29 +57,37 @@ function AdminRegister() {
               <h3 className="text-center mb-4" style={styles.headerText}>Admin Create Account</h3><br />
               <form onSubmit={handleSubmit(onSubmit)}>
                 {/* Full Name */}
-                <div className="mb-3">
+                <div className="mt-2 mb-3">
                   <div className="input-group">
                     <span className="input-group-text" style={styles.iconContainer}>
                       <IoManSharp />
                     </span>
                     <input
                       {...register("fullName", {
-                        required: "Full name is required",
+                        required: "Full Name is required",
                         validate: (value) => {
-                          const trimmedValue = value.trim().replace(/\s+/g, " "); // Trim and remove extra spaces
-                          return /^[A-Za-z]+(?: [A-Za-z]+)*$/.test(trimmedValue)
+                          const sanitizedValue = value.trim().replace(/\s+/g, " "); // Trim and allow only single spaces
+                          const namePattern = /^[A-Za-z]+(?: [A-Za-z]+)*$/; // Validates single or multiple words with one space between
+                          return namePattern.test(sanitizedValue)
                             ? true
                             : "Enter a valid name with only one space between words and no extra spaces";
-                        },
-                        onChange: (e) => {
-                          // Dynamically sanitize input value
-                          e.target.value = e.target.value.trimStart().replace(/\s+/g, " ");
                         },
                       })}
                       className="form-control"
                       type="text"
-                      placeholder="Enter your fullname"
-                      style={styles.input}
+                      placeholder="Enter your Full Name"
+                      onChange={(e) => {
+                        // Dynamically sanitize the input value
+                        const sanitizedValue = e.target.value
+                          .trimStart()
+                          .replace(/\s+/g, " ");
+                        setValue("fullName", sanitizedValue, { shouldValidate: true });
+                      }}
+                      onBlur={(e) => {
+                        // Remove trailing spaces when the field loses focus
+                        const sanitizedValue = e.target.value.trim();
+                        setValue("fullName", sanitizedValue, { shouldValidate: true });
+                      }}
                     />
                   </div>
                   {errors.fullName && <p className="text-danger">{errors.fullName.message}</p>}
@@ -134,6 +143,7 @@ function AdminRegister() {
                       className="form-control"
                       type="password"
                       placeholder="Password"
+                      onInput={(e) => e.target.value = e.target.value.replace(/\s/g, '')} // Remove spaces on input
                       style={styles.input}
                     />
                   </div>

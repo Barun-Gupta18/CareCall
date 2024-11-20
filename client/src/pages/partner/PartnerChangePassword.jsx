@@ -141,6 +141,7 @@ function PartnerChangePassword() {
                       className="form-control"
                       type="password"
                       placeholder="Enter your new password"
+                      onInput={(e) => e.target.value = e.target.value.replace(/\s/g, '')} // Remove spaces on input
                       style={styles.input}
                     />
                   </div>
@@ -164,6 +165,7 @@ function PartnerChangePassword() {
                       className="form-control"
                       type="password"
                       placeholder="Repeat your Password"
+                      onInput={(e) => e.target.value = e.target.value.replace(/\s/g, '')} // Remove spaces on input
                       style={styles.input}
                     />
                   </div>
