@@ -21,7 +21,7 @@ function UserNavbar() {
             <div className="row align-items-center">
               <div className="col-md-3 col-6 site-branding">
                 <div className="header-logo">
-                  <a href="index.html"><img src="/assets/img/logo/1.png" alt="" /></a>
+                  <Link to="/partner/dashboard"><img src="/assets/img/logo/logo-png.png" alt="" style={{ height: "70px", width: "170px" }} /> </Link>
                 </div>
               </div>
               <div className="col-xl-5 col-lg-6 col-md-9 d-none d-md-block">
