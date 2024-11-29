@@ -1,0 +1,1 @@
+import{G as a}from"./iconBase-rI84KobC.js";function r(t){return a({tag:"svg",attr:{viewBox:"0 0 512 512"},child:[{tag:"circle",attr:{cx:"256",cy:"56",r:"56"},child:[]},{tag:"path",attr:{d:"M336 128H176a32 32 0 0 0-32 32v160h48V192h8v320h52V328h8v184h52V192h8v128h48V160a32 32 0 0 0-32-32z"},child:[]}]})(t)}export{r as I};

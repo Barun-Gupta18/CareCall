@@ -1,0 +1,1 @@
+import{j as s}from"./index-ZTq6eiU5.js";const a=()=>s.jsxs("div",{className:"preloader",children:[s.jsxs("div",{className:"spinner",children:[s.jsx("div",{className:"double-bounce1"}),s.jsx("div",{className:"double-bounce2"})]}),s.jsx("p",{className:"loading-text",children:"Loading..."})]});export{a as default};
