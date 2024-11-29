@@ -206,7 +206,9 @@ app.put('/change-status-cancle/:id', partnerAuthMiddleware, partnerController.Ch
 
 
 
-const port = process.env.PORT || 5000; // Define the port the server will listen on
+const port = process.env.PORT || 10000; // Define the port the server will listen on
+
+console.log(port)
 
 // Start the server and listen on the specified port  
 app.listen(port, () => {
