@@ -1,13 +1,7 @@
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useState, useEffect, useContext } from "react";
-// import { FaTrash } from "react-icons/fa";
-// import { CiEdit } from "react-icons/ci";
-// import Modal from "react-bootstrap/Modal";
-// import EditForm from "./users/EditForm";
-// import { userContext } from "../App";
 import { useNavigate } from "react-router-dom";
-// import { utilityFunctions } from "../../utils/module";
 import { utilityFunctions } from "../../utils/module";
 import { Server_URL, Server_URL2 } from "../../utils/config";
 import { showErrorToast, showSuccessToast } from "../../utils/Toasthelper";

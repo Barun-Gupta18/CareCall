@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { Server_URL } from "../../../utils/config";
+import { Server_URL } from "../../utils/config";
 import { showErrorToast, showSuccessToast } from "../../utils/Toasthelper";
 import { FaEnvelope, FaLock } from 'react-icons/fa';
 import { Container, Row, Col } from 'react-bootstrap';

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { utilityFunctions } from "../../utils/module";
-import { Server_URL } from "../../../utils/config";
+import { Server_URL } from "../../utils/config";
 import { showErrorToast, showSuccessToast } from "../../utils/Toasthelper";
 import { Server_URL2 } from "../../utils/config";
 

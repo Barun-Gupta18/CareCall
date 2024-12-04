@@ -6,7 +6,7 @@ import Modal from "react-bootstrap/Modal";
 // import { userContext } from "../App";
 import { useNavigate } from "react-router-dom";
 import { utilityFunctions } from "../../utils/module";
-import { Server_URL } from "../../../utils/config";
+import { Server_URL } from "../../utils/config";
 import { showErrorToast, showSuccessToast } from "../../utils/Toasthelper";
 import { Container, Row, Col } from 'react-bootstrap';
 import { Server_URL2 } from "../../utils/config";

@@ -3,7 +3,7 @@ import axios from "axios";
 import { FaClipboardList, FaTools, FaUsers, FaShoppingCart, FaDollarSign } from 'react-icons/fa';
 import { showErrorToast, showSuccessToast } from "../../utils/Toasthelper";
 import { utilityFunctions } from "../../utils/module";
-import { Server_URL } from "../../../utils/config";
+import { Server_URL } from "../../utils/config";
 import '../css/AdminDashboard.css';
 
 function AdminDashboard() {

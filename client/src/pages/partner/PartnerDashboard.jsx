@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useState, useEffect, useContext } from "react";
-import { Server_URL } from "../../../utils/config";
+import { Server_URL } from "../../utils/config";
 import { utilityFunctions } from "../../utils/module";
 import { FaClipboardList, FaTools, FaUsers, FaShoppingCart, FaDollarSign } from 'react-icons/fa';
 import { showErrorToast, showSuccessToast } from "../../utils/Toasthelper";

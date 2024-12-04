@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { FaUserEdit } from "react-icons/fa";
 import { FiUpload } from "react-icons/fi";
 import { utilityFunctions } from "../../utils/module";
-import { Server_URL, Server_URL2 } from "../../../utils/config";
+import { Server_URL, Server_URL2 } from "../../utils/config";
 import { showErrorToast, showSuccessToast } from "../../utils/Toasthelper";
 import { Container, Row, Col } from 'react-bootstrap';
 

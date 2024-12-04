@@ -3,7 +3,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { utilityFunctions } from "../../utils/module";
-import { Server_URL } from "../../../utils/config";
+import { Server_URL } from "../../utils/config";
 import { showErrorToast, showSuccessToast } from "../../utils/Toasthelper";
 import { FaEnvelope, FaPhone, FaMapMarkerAlt } from 'react-icons/fa';
 import { BsFillCalendarDateFill } from "react-icons/bs";
