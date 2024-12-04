@@ -2,8 +2,8 @@ const jwt = require('jsonwebtoken');
 const db = require('../config/connection');
 const { ObjectId } = require('mongodb');
 const nodemailer = require('nodemailer');
-const jwt_secret = "abc@134kjdncjsjhwvcwkwcjwf@#$%^"
 require('dotenv').config();
+const jwt_secret = process.env.JWT_SECRET
 
 
 
