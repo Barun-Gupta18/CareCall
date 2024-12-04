@@ -96,7 +96,7 @@ function ViewSubCategory() {
                 <div className="col-lg-4 col-md-6" key={index}>
                   <div className="service-wrapper mb-30">
                     <div className="service-img">
-                      <img src={`${Server_URL2}${value.photo}`} alt={value.categoryname}
+                      <img src={value.photo ? `${Server_URL2}${value.photo}` : '/whychoose.png'} alt={value.categoryname}
                         style={{ height: '300px', width: '370px' }}
 
                       />

@@ -315,7 +315,7 @@ function PublicHome() {
                 <div className="col-lg-4 col-md-6" key={index}>
                   <div className="service-wrapper mb-30">
                     <div className="service-img">
-                      <img src={`${Server_URL2}${value.photo}`} alt={value.categoryname} />
+                      <img src={value.photo ? `${Server_URL2}${value.photo}` : '/whychoose.png'} alt={value.categoryname} />
                     </div>
                     <div className="service-text text-center">
                       <div className="service-icon-img">
@@ -363,7 +363,7 @@ function PublicHome() {
                 <div className="col-md-4" key={index}>
                   <div className="testimonial-wrapper mb-30">
                     <div className="testimonial-img text-center">
-                      <img src={`${Server_URL2}${value.userPhoto}`} alt={value.userName} />
+                      <img src={value.userPhoto ? `${Server_URL2}${value.userPhoto}` : '/photo.jpeg'} alt={value.userName} />
                       {/* <img src="/assets/img/testimonial/1.jpg" alt="" /> */}
                     </div>
                     <div className="testimonial-text text-center">

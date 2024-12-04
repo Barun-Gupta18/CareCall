@@ -70,7 +70,7 @@ function ShowPartner() {
             <div className="col-md-6 col-lg-4 mb-4" key={index}>
               <div className="custom-card shadow-sm">
                 <img
-                  src={`${Server_URL2}${value.photo}`}
+                  src={value.photo ? `${Server_URL2}${value.photo}` : '/photo.jpeg'}
                   alt={value.fullname}
                   className="custom-card-img"
                 />

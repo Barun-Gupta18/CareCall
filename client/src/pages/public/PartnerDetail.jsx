@@ -89,7 +89,7 @@ const PartnerDetail = () => {
       {partner.map((value, index) => (
         <div className="provider-detail-container" key={index}>
           <div className="header-section">
-            <img src={`${Server_URL2}${value.photo}`} alt={value.fullname} className="provider-photo" />
+            <img src={value.photo ? `${Server_URL2}${value.photo}` : '/photo.jpeg'} alt={value.fullname} className="provider-photo" />
             <div className="provider-info">
               <div className="name-and-button">
                 <h2>{value.fullname}</h2>
