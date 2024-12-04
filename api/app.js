@@ -6,6 +6,8 @@ const userController = require('./controllers/userController');
 const partnerController = require('./controllers/partnerController');
 const { userAuthMiddleware, adminAuthMiddleware, partnerAuthMiddleware } = require('./middlewares/authMiddleware');
 const fileUpload = require('express-fileupload');
+require('dotenv').config();
+
 
 app.use(cors());
 app.use(fileUpload());
@@ -208,7 +210,7 @@ app.put('/change-status-cancle/:id', partnerAuthMiddleware, partnerController.Ch
 
 const port = process.env.PORT || 5000; // Define the port the server will listen on
 
-console.log(port)
+// console.log(port)
 
 // Start the server and listen on the specified port  
 app.listen(port, () => {

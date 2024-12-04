@@ -1,6 +1,7 @@
 const { MongoClient } = require("mongodb");
+require('dotenv').config();
 
-const dbURI = "mongodb://localhost:27017";
+const dbURI = process.env.DBURI
 const client = new MongoClient(dbURI);
 
 async function connectToDatabase() {

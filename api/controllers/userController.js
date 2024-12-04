@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const db = require('../config/connection');
 const { ObjectId } = require('mongodb');
 const nodemailer = require('nodemailer');
+require('dotenv').config();
 const jwt_secret = "abc@134kjdncjsjhwvcwkwcjwf@#$%^"
 
 const userController = {};
@@ -72,8 +73,8 @@ userController.UserForgotPassword = async (req, res) => {
       const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-          // user: /* pass here gmail id which one send the otp to custmoer*/ 
-          // pass: /* pass here the password of gmail which is pass in above  */  // Gmail app password (not the actual account password)
+          user: process.env.USER,
+          pass: process.env.PASS,
         },
       });
 
