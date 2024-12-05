@@ -1,2 +1,6 @@
 api/.env
 client/.env
+api/package-lock.json
+api/package.json
+client/package-lock.json
+client/package.json
