@@ -142,7 +142,7 @@ function EditCategory() {
                     </tr>
                     <tr>
                       <td colSpan={2} className="text-center">
-                        <img src={category.photo ? (Server_URL2 + category.photo) : '/photo.jpeg'} alt="" style={{ height: 100, borderRadius: 10 }} />
+                        <img src={category.photo ? category.photo : '/photo.jpeg'} alt="" style={{ height: 100, borderRadius: 10 }} />
                         <br /><br />
                         <button type="butto" className=" btn btn-warning" onClick={handleShow}>Upload <span>   </span> <FiUpload /></button>
                       </td>
