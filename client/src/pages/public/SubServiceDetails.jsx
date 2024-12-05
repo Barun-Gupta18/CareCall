@@ -195,7 +195,7 @@ function ViewParticularPartner() {
                 <div className="col-lg-4 col-md-6" key={index}>
                   <div className="service-wrapper mb-30">
                     <div className="service-img">
-                      <img src={value.photo ? `${Server_URL2}${value.photo}` : '/whychoose.png'} alt={value.fullname}
+                      <img src={value.photo ? value.photo : '/whychoose.png'} alt={value.fullname}
                         style={{ height: '100%', width: '100%', objectFit: 'cover' }}
 
                       />

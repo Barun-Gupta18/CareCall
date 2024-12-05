@@ -88,7 +88,7 @@ function Categorydetails() {
               <div className="col-md-6 d-flex justify-content-center" key={index}>
                 <div className="project-details-img-wrapper">
                   <img
-                    src={value.photo ? `${Server_URL2}${value.photo}` : '/whychoose.png'}
+                    src={value.photo ? value.photo : '/whychoose.png'}
                     alt={value.categoryname}
                     className="img-fluid shadow-lg rounded"
                     style={{ maxWidth: "100%", height: "auto" }}

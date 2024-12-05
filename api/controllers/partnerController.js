@@ -375,9 +375,6 @@ partnerController.UpdatePhoto = async (req, res) => {
     const filter = { _id: new ObjectId(req.partnerInfo.id) };
     const { photo } = req.files;
 
-    // console.log(photo)
-
-
     const result = await cloudinary.uploader.upload(photo.tempFilePath, {
       folder: "DoorStepService"  // Specify the folder name here
     });
@@ -392,32 +389,6 @@ partnerController.UpdatePhoto = async (req, res) => {
     }
 
     res.json({ error: false, message: 'Photo uploaded and updated successfully' })
-
-
-
-
-
-
-
-
-
-
-    // const dbPath = '/images/' + photo.name;
-    // const serverPath = 'public/images/' + photo.name;
-
-
-    // photo.mv(serverPath, (e) => {
-    //   if (e) {
-    //     return res.json({ error: true, message: e.message });
-    //   }
-    //   const updatepath = db.collection("Partner").updateOne(filter, { $set: { photo: dbPath } })
-    //   if (e) {
-    //     return res.json({ error: true, message: e.message });
-    //   }
-
-    //   res.json({ error: false, message: 'photo uploaded successfully' })
-    // })
-
   } catch (e) {
     res.json({ error: true, message: e.message });
   }

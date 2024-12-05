@@ -55,7 +55,7 @@ function ViewParticularSubCategory() {
               <div className="service-wrapper mb-30">
                 <div className="service-img" style={{ height: '450px', overflow: 'hidden' }}>
                   <img
-                    src={value.photo ? `${Server_URL2}${value.photo}` : '/whychoose.png'}
+                    src={value.photo ? value.photo : '/whychoose.png'}
                     alt={value.subcategory}
                     style={{ height: '100%', width: '100%', objectFit: 'cover' }}
                   />

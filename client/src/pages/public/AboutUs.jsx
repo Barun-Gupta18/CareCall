@@ -170,7 +170,7 @@ function About() {
                   <div className="team-wrapper mb-30">
                     <div className="team-img">
                       <img
-                        src={`${Server_URL2}${value.photo}`}
+                        src={value.photo}
                         alt={value.fullname}
                         style={{
                           height: '250px', // Adjust as needed

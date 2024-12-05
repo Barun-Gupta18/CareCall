@@ -115,7 +115,7 @@ function ViewAdmin() {
                     </tr>
                     <tr>
                       <td colSpan={2} className="text-center">
-                        <img src={admin.photo ? `${Server_URL2}${admin.photo}` : '/photo.jpeg'} alt="" style={{ height: 100, borderRadius: 10 }} />
+                        <img src={admin.photo ? admin.photo : '/photo.jpeg'} alt="" style={{ height: 100, borderRadius: 10 }} />
                         <br /><br />
                         <button type="button" className="btn btn-warning" onClick={handleShow}>Upload <span> </span> <FiUpload /></button>
                       </td>

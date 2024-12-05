@@ -61,7 +61,7 @@ function ViewAllCategory() {
                 <div className="col-lg-4 col-md-6" key={index}>
                   <div className="service-wrapper mb-30">
                     <div className="service-img">
-                      <img src={value.photo ? `${Server_URL2}${value.photo}` : '/whychoose.png'} alt={value.categoryname} />
+                      <img src={value.photo ? value.photo : '/whychoose.png'} alt={value.categoryname} />
                     </div>
                     <div className="service-text text-center">
                       <div className="service-icon-img">

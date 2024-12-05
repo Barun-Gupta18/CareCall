@@ -166,7 +166,7 @@ function ViewUser() {
                     </tr>
                     <tr>
                       <td colSpan={2} className="text-center">
-                        <img src={user.photo ? (Server_URL2 + user.photo) : '/photo.jpeg'} alt="User-Photo" style={{ height: 100, borderRadius: 10 }} />
+                        <img src={user.photo ? user.photo : '/photo.jpeg'} alt="User-Photo" style={{ height: 100, borderRadius: 10 }} />
                         <br /><br />
                         <button type="butto" className=" btn btn-warning" onClick={handleShow}>Upload <span>   </span> <FiUpload /></button>
                       </td>

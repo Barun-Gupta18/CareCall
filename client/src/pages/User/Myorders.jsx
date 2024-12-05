@@ -91,7 +91,7 @@ function UserMyOrders() {
             <div className="col-lg-4 col-md-6 mb-4" key={index}>
               <div className="service-card">
                 <div className="service-img">
-                  <img src={`${Server_URL2}${value.subcategoryPhoto}`} alt={value.subcategoryName} />
+                  <img src={value.subcategoryPhoto} alt={value.subcategoryName} />
                 </div>
                 <div className="service-content">
                   <h2 className="service-title">{value.subcategoryInfo}</h2>

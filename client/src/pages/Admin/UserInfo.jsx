@@ -40,7 +40,7 @@ function ShowUsers() {
               <div className="custom-card shadow">
                 <div className="custom-card-header">
                   <img
-                    src={user.photo ? `${Server_URL2}${user.photo}` : '/photo.jpeg'}
+                    src={user.photo ? user.photo : '/photo.jpeg'}
                     alt={user.fullName}
                     className="custom-card-img"
                   />
