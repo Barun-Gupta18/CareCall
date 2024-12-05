@@ -171,7 +171,7 @@ function ViewPartner() {
                     </tr>
                     <tr>
                       <td colSpan={2} className="text-center">
-                        <img src={partner.photo ? (Server_URL2 + partner.photo) : '/photo.jpeg'} alt="Partner-Photo" style={{ height: 100, borderRadius: 10 }} />
+                        <img src={partner.photo ? partner.photo : '/photo.jpeg'} alt="Partner-Photo" style={{ height: 100, borderRadius: 10 }} />
                         <br /><br />
                         <button type="butto" className=" btn btn-warning" onClick={handleShow}>Upload <span>   </span> <FiUpload /></button>
                       </td>

@@ -10,7 +10,10 @@ require('dotenv').config();
 
 
 app.use(cors());
-app.use(fileUpload());
+app.use(fileUpload({
+  useTempFiles: true,           // Enable temporary files
+  tempFileDir: '/tmp/'
+}));
 app.use(express.json());
 app.use(express.static("public"));
 
