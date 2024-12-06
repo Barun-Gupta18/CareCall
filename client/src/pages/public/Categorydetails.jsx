@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { Server_URL, Server_URL2 } from '../../utils/config';
+import { Server_URL } from '../../utils/config';
 import { showErrorToast, showSuccessToast } from '../../utils/Toasthelper';
 
 

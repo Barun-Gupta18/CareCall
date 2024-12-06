@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import axios from "axios";
 import { showErrorToast, showSuccessToast } from "../../utils/Toasthelper";
-import { Server_URL, Server_URL2 } from "../../utils/config";
+import { Server_URL } from "../../utils/config";
 import { utilityFunctions } from "../../utils/module";
 import './PartnerDetail.css';
 

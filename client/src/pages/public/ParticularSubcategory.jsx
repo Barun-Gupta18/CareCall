@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
-import { Server_URL, Server_URL2 } from "../../utils/config";
+import { Server_URL } from "../../utils/config";
 import { showErrorToast } from "../../utils/Toasthelper";
 
 function ViewParticularSubCategory() {

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import { Link, useNavigate } from "react-router-dom";
 import { utilityFunctions } from "../../utils/module";
-import { Server_URL, Server_URL2 } from "../../utils/config";
+import { Server_URL } from "../../utils/config";
 import { showErrorToast, showSuccessToast } from "../../utils/Toasthelper";
 import { FaStar } from "react-icons/fa";
 import "./MyOrders.css";

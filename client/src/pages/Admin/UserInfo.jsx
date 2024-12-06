@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { utilityFunctions } from "../../utils/module";
-import { Server_URL, Server_URL2 } from "../../utils/config";
+import { Server_URL } from "../../utils/config";
 import { showErrorToast } from "../../utils/Toasthelper";
 
 function ShowUsers() {

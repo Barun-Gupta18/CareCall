@@ -9,7 +9,6 @@ import { utilityFunctions } from "../../utils/module";
 import { Server_URL } from "../../utils/config";
 import { showErrorToast, showSuccessToast } from "../../utils/Toasthelper";
 import { Container, Row, Col } from 'react-bootstrap';
-import { Server_URL2 } from "../../utils/config";
 import { FaUserEdit } from "react-icons/fa";
 import { FiUpload } from "react-icons/fi";
 

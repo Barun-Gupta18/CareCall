@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { utilityFunctions } from "../../utils/module";
-import { Server_URL, Server_URL2 } from '../../utils/config';
+import { Server_URL } from '../../utils/config';
 import { showErrorToast, showSuccessToast } from '../../utils/Toasthelper';
 
 
@@ -95,7 +95,7 @@ function UserCategorydetails() {
               <div className="col-md-6 d-flex justify-content-center" key={index}>
                 <div className="project-details-img-wrapper">
                   <img
-                    src={`${Server_URL2}${value.photo}`}
+                    src={value.photo}
                     alt={value.categoryname}
                     className="img-fluid shadow-lg rounded"
                     style={{ maxWidth: "100%", height: "auto" }}
