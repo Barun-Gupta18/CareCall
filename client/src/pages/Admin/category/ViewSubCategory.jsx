@@ -84,12 +84,28 @@ function ViewSubCategory() {
 
   return (
     <>
+
+      {/* <!-- breadcrumb-banner-area --> */}
+      <div className="breadcrumb-banner-area ptb-120 bg-opacity" style={{ backgroundImage: 'url("/assets/img/bg/6.jpg")' }}>
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-12">
+              <div className="breadcrumb-text text-center">
+                <h2>Sub-services</h2>
+                {/* <p>Make's your Life easy. </p> */}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* <!-- breadcrumb-banner-area-end --> */}
+
       <div className="our-service-area pt-120 pb-90">
         <div className="container">
-          <div className="section-title mb-60 text-center" style={{ backgroundImage: "url('assets/img/logo/section.png')" }}>
+          {/* <div className="section-title mb-60 text-center" style={{ backgroundImage: "url('assets/img/logo/section.png')" }}>
             <h4>Services</h4>
             <h2>Sub-Category</h2>
-          </div>
+          </div> */}
           <div className="row">
             {subcategory.map((value, index) => {
               return (
@@ -105,7 +121,7 @@ function ViewSubCategory() {
                       <div className="service-icon-img">
                         <i className="flaticon-house-icon"></i>
                       </div>
-                      <h2><Link to="service-details.html">{value.subcategory}</Link></h2>
+                      <h2><Link to="">{value.subcategory}</Link></h2>
                       <h4>{value.categoryInfo}</h4>
                       {/* <p>{value.description} </p> */}
                       <button

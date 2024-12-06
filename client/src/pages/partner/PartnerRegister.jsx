@@ -68,6 +68,7 @@ function PartnerRegister() {
 
   async function onSubmit(data) {
     try {
+      console.log(data)
       const url = `${Server_URL}manage-partner`;
       const response = await axios.post(url, data);
       const { error, message } = response.data;

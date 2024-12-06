@@ -130,21 +130,30 @@ function AddSubCategory() {
 
                 <div className="mb-3">
                   <div className="input-group">
-                    <span className="input-group-text" style={styles.iconContainer}><MdDescription /></span>
-                    <textarea {...register('briefDescription', {
-                      required: "Address is required",
-                      validate: (value) => {
-                        const trimmedValue = value.trim().replace(/\s+/g, " ");
-                        if (trimmedValue.length < 5) return "Address must be at least 5 characters";
-                        if (trimmedValue.length > 100) return "Address must not exceed 100 characters";
-                        return true;
-                      },
-                      onChange: (e) => {
-                        e.target.value = e.target.value.trimStart().replace(/\s+/g, " ");
-                      },
-                    })} className="form-control shadow" rows="5" placeholder="Brief description for sub-service"></textarea>
+                    <span className="input-group-text" style={styles.iconContainer}>
+                      <FaAddressCard />
+                    </span>
+                    <textarea
+                      {...register("briefDescription", {
+                        required: "Brief description is required.",
+                        validate: (value) => {
+                          const trimmedValue = value.trim();
+                          if (trimmedValue.length < 5)
+                            return "Brief description must be at least 5 characters.";
+                          if (trimmedValue.length > 1000)
+                            return "Brief description must not exceed 100 characters.";
+                          return true;
+                        },
+                      })}
+                      className="form-control shadow"
+                      rows="5"
+                      placeholder="Enter a brief description for the service"
+                      style={{ ...styles.input, resize: "none" }}
+                    ></textarea>
                   </div>
-                  {errors.briefDescription && <p className="text-danger">This field is required</p>}
+                  {errors.briefDescription && (
+                    <p className="text-danger">{errors.briefDescription.message}</p>
+                  )}
                 </div><br />
 
                 <button className="btn w-100" style={styles.button}>Add</button>

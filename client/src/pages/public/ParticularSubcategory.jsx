@@ -4,16 +4,16 @@ import { useState, useEffect } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { Server_URL } from "../../utils/config";
 import { showErrorToast } from "../../utils/Toasthelper";
+import '../css/ParticularSubcategory.css'; // Ensure to import the CSS file for styling
 
 function ViewParticularSubCategory() {
   const { register, handleSubmit, formState: { errors }, reset, setFocus } = useForm();
   const navigate = useNavigate();
-  const location = useLocation(); // Initialize `id` with `location.state?.id` or retrieve it from localStorage if undefined.
+  const location = useLocation();
   const [id, setId] = useState(location.state?.id || localStorage.getItem('subcategoryId'));
   const [particularsubcategory, setParticularsubcategory] = useState([]);
 
   useEffect(() => {
-    // If `id` exists, save it to local storage and fetch data.
     if (id) {
       localStorage.setItem('subcategoryId', id);
       getParticularsubcategory(id);
@@ -43,45 +43,64 @@ function ViewParticularSubCategory() {
   }
 
   return (
-    <div className="our-service-area pt-120 pb-90">
-      <div className="container">
-        <div className="section-title mb-60 text-center" style={{ backgroundImage: "url('assets/img/logo/section.png')" }}>
-          <h4>Services</h4>
-          <h2>Sub-services</h2>
-        </div>
-        <div className="row">
-          {particularsubcategory.map((value, index) => (
-            <div className="col-lg-4 col-md-6" key={index}>
-              <div className="service-wrapper mb-30">
-                <div className="service-img" style={{ height: '450px', overflow: 'hidden' }}>
-                  <img
-                    src={value.photo ? value.photo : '/whychoose.png'}
-                    alt={value.subcategory}
-                    style={{ height: '100%', width: '100%', objectFit: 'cover' }}
-                  />
-                </div>
-                <div className="service-text text-center">
-                  <div className="service-icon-img">
-                    <i className="flaticon-house-icon"></i>
-                  </div>
-                  <h2 onClick={() => sendSubcategoryId(value._id)}><Link>{value.subcategory}</Link></h2>
-                  <p>{value.categoryInfo}</p><br />
-                  {/* <Link
-                    to="#"
-                    onClick={(event) => {
-                      event.preventDefault(); // Prevent default link behavior
-                      sendSubcategoryId(value._id); // Call your function
-                    }}
-                  >
-                    Read more
-                  </Link> */}
-                </div>
+    <>
+
+      {/* <!-- breadcrumb-banner-area --> */}
+      <div className="breadcrumb-banner-area ptb-120 bg-opacity" style={{ backgroundImage: 'url("assets/img/bg/6.jpg")' }}>
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-12">
+              <div className="breadcrumb-text text-center">
+                <h2>Sub-services</h2>
+                {/* <p>Make's your Life easy. </p> */}
               </div>
             </div>
-          ))}
+          </div>
         </div>
       </div>
-    </div>
+      {/* <!-- breadcrumb-banner-area-end --> */}
+
+      <div className="our-service-area pt-120 pb-90">
+        <div className="container">
+          {/* <div className="section-title mb-60 text-center">
+          <h4>Services</h4>
+          <h2>Sub-services</h2>
+        </div> */}
+          <div className="row">
+            {particularsubcategory.map((value, index) => (
+              <div className="col-lg-4 col-md-6" key={index}>
+                <div className="service-wrapper mb-30 shadow-card">
+                  <div className="service-img" style={{ height: '350px', overflow: 'hidden' }}>
+                    <img
+                      src={value.photo ? value.photo : '/whychoose.png'}
+                      alt={value.subcategory}
+                      style={{ height: '100%', width: '100%', objectFit: 'cover', borderRadius: '8px' }}
+                    />
+                  </div>
+                  <div className="service-text text-center mt-3">
+                    <h3 className="service-title">
+                      {value.subcategory}
+                    </h3>
+                    <p className="service-description">{value.categoryInfo}</p>
+                    <Link
+                      to="#"
+                      onClick={(event) => {
+                        event.preventDefault();
+                        sendSubcategoryId(value._id);
+                      }}
+                      className="read-more-link"
+                    >
+                      Read more
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+    </>
   );
 }
 

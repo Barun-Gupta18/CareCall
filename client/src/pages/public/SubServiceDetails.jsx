@@ -117,7 +117,7 @@ function ViewParticularPartner() {
               <Col md={5} className="text-center">
                 <div className="image-container">
                   <img
-                    src={value.photo}
+                    src={value.photo ? value.photo : '/whychoose.png'}
                     alt={value.subcategory}
                     className="service-image"
                   />

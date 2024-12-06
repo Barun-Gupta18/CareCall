@@ -58,7 +58,7 @@ partnerController.PartnerRegistration = async (req, res) => {
       res.json({ error: true, message: 'Email Already Exists' });
     } else {
       const document = {
-        fullname: req.body.fullName,
+        fullname: req.body.fullname,
         email: req.body.email,
         password: req.body.password,
         mobile: req.body.mobile,

@@ -1,28 +1,26 @@
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Server_URL } from "../../../utils/config";
 import { utilityFunctions } from "../../../utils/module";
 import { showErrorToast, showSuccessToast } from "../../../utils/Toasthelper";
 import { TbMapPinCode } from "react-icons/tb";
 import { MdRealEstateAgent } from "react-icons/md";
-import { FaCity } from "react-icons/fa6";
+import { FaCity } from "react-icons/fa";
 import { Container, Row, Col } from 'react-bootstrap';
 
-
-function addCity() {
+function AddCity() {
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-    setFocus,
     setValue,
   } = useForm();
 
   const [state, setState] = useState([]);
-
+  const navigate = useNavigate();
 
   async function viewStateData() {
     try {
@@ -35,7 +33,7 @@ function addCity() {
       });
       const { error, message } = response.data;
       if (error && message === "SignIn") {
-        navigate('/admin-login')
+        navigate('/admin-login');
       }
       else if (error) {
         showErrorToast(message);
@@ -48,10 +46,6 @@ function addCity() {
     }
   }
 
-
-
-  const navigate = useNavigate();
-
   async function onSubmit(data) {
     try {
       const token = utilityFunctions.getCookieValue('adminAuthToken');
@@ -61,14 +55,12 @@ function addCity() {
           Authorization: token ? `Bearer ${token}` : ""
         }
       });
-      // console.log(response.data);
       const { error, message } = response.data;
       if (error) {
         showErrorToast(message);
       } else {
         reset();
         showSuccessToast(message);
-        // navigate('/admin-login');
       }
     } catch (error) {
       showErrorToast(error.message);
@@ -78,7 +70,6 @@ function addCity() {
   useEffect(() => {
     viewStateData();
   }, []);
-
 
   return (
     <>
@@ -91,7 +82,7 @@ function addCity() {
                 <div className="mb-3">
                   <div className="input-group">
                     <span className="input-group-text" style={styles.iconContainer}><MdRealEstateAgent /></span>
-                    <select className="form-select" {...register('stateId', { required: true })} name="stateId" id="stateId" >
+                    <select className="form-select" {...register('stateId', { required: true })} name="stateId" id="stateId">
                       <option value="">Please Select state</option>
                       {state.map(x => <option key={x._id} value={x._id}>{x.statename}</option>)}
                     </select>
@@ -106,33 +97,31 @@ function addCity() {
                     <span className="input-group-text" style={styles.iconContainer}><FaCity /></span>
                     <input
                       {...register("cityname", {
-                        required: "city name is required",
+                        required: "City name is required",
                         validate: (value) => {
                           const sanitizedValue = value.trim().replace(/\s+/g, " "); // Trim and allow only single spaces
                           const namePattern = /^[A-Za-z]+(?: [A-Za-z]+)*$/; // Validates single or multiple words with one space between
                           return namePattern.test(sanitizedValue)
                             ? true
-                            : "Enter a valid city  with only one space between words and no extra spaces";
+                            : "Enter a valid city with only one space between words and no extra spaces";
                         },
                       })}
                       className="form-control"
                       type="text"
                       placeholder="Enter your City name"
                       onChange={(e) => {
-                        // Dynamically sanitize the input value
                         const sanitizedValue = e.target.value
                           .trimStart()
                           .replace(/\s+/g, " ");
                         setValue("cityname", sanitizedValue, { shouldValidate: true });
                       }}
                       onBlur={(e) => {
-                        // Remove trailing spaces when the field loses focus
                         const sanitizedValue = e.target.value.trim();
                         setValue("cityname", sanitizedValue, { shouldValidate: true });
                       }}
                     />
                   </div>
-                  {errors.cityname && <p className="text-danger">This field is required</p>}
+                  {errors.cityname && <p className="text-danger">{errors.cityname.message}</p>}
                 </div><br />
 
                 <div className="mb-3">
@@ -140,26 +129,21 @@ function addCity() {
                     <span className="input-group-text" style={styles.iconContainer}><TbMapPinCode /></span>
                     <input
                       {...register("pincode", {
-                        required: true, validate: (value) => {
+                        required: "Pincode is required",
+                        validate: (value) => {
                           const trimmedValue = value.trim();
-                          return /^[0-9]{4}$/.test(trimmedValue)
+                          return /^[0-9]{6}$/.test(trimmedValue) // Updated to 6-digit pincode
                             ? true
-                            : "Enter a valid 10-digit mobile number without spaces";
-                        },
-                        onChange: (e) => {
-                          e.target.value = e.target.value.trimStart();
+                            : "Enter a valid 6-digit pincode";
                         },
                       })}
                       className="form-control"
-                      type="number"
+                      type="tel"
                       placeholder="Enter your city pincode"
-                      style={styles.input}
                     />
                   </div>
-                  {errors.pincode && <p className="text-danger">This field is required</p>}
+                  {errors.pincode && <p className="text-danger">{errors.pincode.message}</p>}
                 </div><br />
-
-
 
                 <button className="btn w-100" style={styles.button}>Add</button>
               </form>
@@ -167,7 +151,6 @@ function addCity() {
           </Col>
         </Row>
       </Container>
-
     </>
   );
 }
@@ -183,7 +166,7 @@ const styles = {
   formContainer: {
     backgroundColor: 'rgba(0, 40, 72)', // Translucent background
     borderRadius: '10px',
-    padding: '60px 40px', // Increased padding for larger form
+    padding: '40px', // Reduced padding for more compact form
     width: '100%',
     maxWidth: '500px', // Increased max width for larger form
     backdropFilter: 'blur(10px)', // Blurring the background for effect
@@ -198,11 +181,6 @@ const styles = {
     backgroundColor: '#FFFFFF',
     border: 'none',
   },
-  input: {
-    border: 'none',
-    paddingLeft: '10px',
-    fontSize: '16px', // Slightly larger text for better readability
-  },
   button: {
     background: 'linear-gradient(135deg, #4E54C8, #132e4f)',
     color: '#FFFFFF',
@@ -212,4 +190,4 @@ const styles = {
   },
 };
 
-export default addCity;
+export default AddCity;
