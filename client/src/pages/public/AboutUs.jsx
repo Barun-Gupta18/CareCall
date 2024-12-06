@@ -224,9 +224,17 @@ function About() {
         <div className="container">
           <div className="section-info text-center mb-70">
             <h2>Our Clients</h2>
-            <p>They can trust on us since last ten years . </p>
+            <p>They can trust on us since last ten years.</p>
           </div>
-          <div style={{ display: "flex", gap: 40 }}>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
+              gap: "20px",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
             <div className="brand-wrapper">
               <div className="brand-img">
                 <img src="assets/img/brand/1.png" alt="" />
@@ -260,6 +268,7 @@ function About() {
           </div>
         </div>
       </div>
+
       {/* <!-- brand-area-end --> */}
     </>
   )
