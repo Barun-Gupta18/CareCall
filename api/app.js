@@ -10,7 +10,7 @@ require('dotenv').config();
 
 
 app.use(cors({
-  origin: ["https://care-call-frontend.vercel.app/"],
+  origin: ["https://care-call-frontend.vercel.app"],
   method: ["POST", "GET", "PUT", "DELETE"],
   credentials: true
 }));
