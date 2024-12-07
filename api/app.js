@@ -202,6 +202,9 @@ app.put('/change-status-complete/:id', partnerAuthMiddleware, partnerController.
 
 app.put('/change-status-cancle/:id', partnerAuthMiddleware, partnerController.ChangeStatusCanceled);
 
+app.get('/', (req, res) => {
+  res.send('Hello World! Welcome to your Express server.');
+});
 
 
 
