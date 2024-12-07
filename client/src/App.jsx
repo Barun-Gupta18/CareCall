@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useState, lazy, Suspense } from 'react'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -122,6 +123,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
 
+  axios.defaults.withCredentials = true;
   return (
     <>
       <Suspense fallback={<PreLoader />}>
