@@ -9,11 +9,13 @@ const fileUpload = require('express-fileupload');
 require('dotenv').config();
 
 
-app.use(cors({
-  origin: ["https://care-call-frontend.vercel.app"],
-  method: ["POST", "GET", "PUT", "DELETE"],
-  credentials: true
-}));
+app.use(cors(
+  {
+    origin: ["https://care-call-frontend.vercel.app"],
+    method: ["POST", "GET", "PUT", "DELETE"],
+    credentials: true
+  }
+));
 app.use(fileUpload({ useTempFiles: true, tempFileDir: '/tmp/' }));
 app.use(express.json());
 app.use(express.static("public"));
