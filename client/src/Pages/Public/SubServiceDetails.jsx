@@ -9,7 +9,7 @@ import { useLocation } from 'react-router-dom';
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { FaUserCheck, FaHeadset, FaShieldAlt, FaThumbsUp, FaDollarSign } from 'react-icons/fa';
-import './ServiceDescription.css';
+// import './ServiceDescription.css';
 
 
 

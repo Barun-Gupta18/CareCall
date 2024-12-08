@@ -9,7 +9,7 @@ import { FaEnvelope, FaPhone, FaMapMarkerAlt } from 'react-icons/fa';
 import { BsFillCalendarDateFill } from "react-icons/bs";
 import { PiAddressBookFill } from "react-icons/pi";
 import { Container, Row, Col } from 'react-bootstrap';
-import './BookingPage.css';
+// import './BookingPage.css';
 import { useRazorpay } from "react-razorpay";
 
 function BookingPage() {

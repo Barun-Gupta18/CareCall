@@ -4,7 +4,7 @@ import { FaClipboardList, FaTools, FaUsers, FaShoppingCart, FaDollarSign } from 
 import { showErrorToast } from "../../utils/Toasthelper";
 import { utilityFunctions } from "../../utils/module";
 import { Server_URL } from "../../utils/config";
-import '../css/AdminDashboard.css';
+// import '../css/AdminDashboard.css';
 
 function AdminDashboard() {
   const [category, setCategory] = useState(0);

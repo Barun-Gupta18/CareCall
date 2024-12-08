@@ -4,7 +4,7 @@ import axios from "axios";
 import { showErrorToast, showSuccessToast } from "../../utils/Toasthelper";
 import { Server_URL } from "../../utils/config";
 import { utilityFunctions } from "../../utils/module";
-import './PartnerDetail.css';
+// import './PartnerDetail.css';
 
 const PartnerDetail = () => {
   const location = useLocation();

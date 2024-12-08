@@ -7,7 +7,7 @@ import { utilityFunctions } from "../../utils/module";
 import { Server_URL } from "../../utils/config";
 import { showErrorToast, showSuccessToast } from "../../utils/Toasthelper";
 import { FaStar } from "react-icons/fa";
-import "./MyOrders.css";
+// import "./MyOrders.css";
 
 function UserMyOrders() {
   const { register, handleSubmit, formState: { errors }, reset, setFocus } = useForm();
