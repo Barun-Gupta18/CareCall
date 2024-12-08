@@ -13,7 +13,6 @@ const PublicHome = lazy(() => import("./Pages/Public/Home.jsx"));
 const ViewAllCategory = lazy(() => import("./Pages/Public/ViewAllCategory.jsx"));
 const Particularsubcategory = lazy(() => import("./Pages/Public/ParticularSubcategory.jsx"));
 const SubServiceDetails = lazy(() => import("./Pages/Public/SubServiceDetails.jsx"));
-const Example = lazy(() => import("./Pages/Public/Example.jsx"));
 const CategoryDetails = lazy(() => import("./Pages/Public/CategoryDetails.jsx"));
 const AboutUs = lazy(() => import("./Pages/Public/AboutUs.jsx"));
 const PartnerDetail = lazy(() => import("./Pages/Public/PartnerDetail.jsx"));
@@ -90,7 +89,6 @@ function App() {
             <Route path='all-category' element={<ViewAllCategory />}></Route>
             <Route path='particular-subcategory' element={<Particularsubcategory />}></Route>
             <Route path='particular-partner' element={<SubServiceDetails />}></Route>
-            <Route path='example' element={< Example />}></Route>
             <Route path='category-details' element={<CategoryDetails />}></Route>
             <Route path='about-us' element={<AboutUs />}></Route>
             <Route path='partner-detail' element={<PartnerDetail />}></Route>
@@ -126,12 +124,6 @@ function App() {
             <Route path='dashboard' element={<UserDashboard />}></Route>
             <Route path='change-password' element={<UserChangePassword />}></Route>
             <Route path='view-profile' element={<UserViewProfile />}></Route>
-            {/* <Route path='book-partner' element={<BookNow />}></Route> */}
-            {/* <Route path='home' element={<UserHome />}></Route> */}
-            {/* <Route path='single-category' element={<UserCategorydetails />}></Route> */}
-            {/* <Route path='sub-category' element={<UserParticularSubCategory />}></Route> */}
-            {/* <Route path='sub-category-details' element={<UserSubcategoryDetails />}></Route> */}
-            {/* <Route path='partner-details' element={<UserPartnerDetails />}></Route> */}
             <Route path='add-details' element={<BookingPage />}></Route>
             <Route path='my-orders' element={<MyOrders />}></Route>
             <Route path='more-details' element={<MoreDetails />}></Route>
