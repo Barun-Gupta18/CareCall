@@ -4,7 +4,6 @@ import axios from "axios";
 import { showErrorToast, showSuccessToast } from "../../utils/Toasthelper";
 import { Server_URL } from "../../utils/config";
 import { utilityFunctions } from "../../utils/module";
-// import './PartnerDetail.css';
 
 const PartnerDetail = () => {
   const location = useLocation();
@@ -13,7 +12,6 @@ const PartnerDetail = () => {
 
   const [partner, setPartner] = useState([]);
   const [review, setReview] = useState([]);
-
 
   async function getpartnerData() {
     if (!id) return;
@@ -62,7 +60,6 @@ const PartnerDetail = () => {
     try {
       const url = Server_URL + "view-particular-reviews/" + id;
       const response = await axios.get(url);
-      // console.log(headers);
       const { error, message } = response.data;
       if (error) {
         showErrorToast(message);
@@ -70,7 +67,6 @@ const PartnerDetail = () => {
         const { result } = response.data;
         setReview(result);
       }
-      // }
     } catch (error) {
       showErrorToast(error.message);
     }
@@ -83,29 +79,111 @@ const PartnerDetail = () => {
   }
   const avgRating = calculateAverageRating(review);
 
-
   return (
     <>
+      <style>{`
+        .provider-detail-container {
+          width: 90%;
+          max-width: 900px;
+          margin: auto;
+          padding: 20px;
+          background-color: #f9f9f9;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          border-radius: 8px;
+          font-family: Arial, sans-serif;
+        }
+        .header-section {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 20px;
+          border-bottom: 1px solid #ddd;
+          padding-bottom: 20px;
+          margin-bottom: 20px;
+        }
+        .provider-photo {
+          width: 150px;
+          height: 150px;
+          border-radius: 50%;
+          object-fit: cover;
+          border: 3px solid #ddd;
+        }
+        .provider-info h2 {
+          font-size: 1.8em;
+          margin: 0;
+        }
+        .provider-info p {
+          margin: 5px 0;
+          color: #555;
+        }
+        .contact-info p {
+          margin: 3px 0;
+          color: #666;
+        }
+        .ratings-section h3 {
+          font-size: 1.5em;
+          margin-bottom: 10px;
+        }
+        .reviews {
+          background-color: #fff;
+          padding: 15px;
+          border-radius: 5px;
+          margin-top: 10px;
+        }
+        .review {
+          margin-bottom: 15px;
+          border-bottom: 1px solid #ddd;
+          padding-bottom: 10px;
+        }
+        .btn-primary {
+          background-color: #4CAF50;
+          color: #fff;
+          padding: 10px 20px;
+          text-decoration: none;
+          border-radius: 5px;
+          transition: background 0.3s;
+          display: inline-block;
+        }
+        .btn-primary:hover {
+          background-color: #45d14c;
+        }
+        .name-and-button {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 10px;
+        }
+        @media (max-width: 768px) {
+          .header-section {
+            flex-direction: column;
+            align-items: center;
+          }
+          .provider-info h2 {
+            font-size: 1.5em;
+          }
+          .btn-primary {
+            width: 100%;
+            text-align: center;
+          }
+        }
+      `}</style>
       {partner.map((value, index) => (
         <div className="provider-detail-container" key={index}>
           <div className="header-section">
-            <img src={value.photo ? value.photo : '/photo.jpeg'} alt={value.fullname} className="provider-photo" />
+            <img src={value.photo || '/photo.jpeg'} alt={value.fullname} className="provider-photo" />
             <div className="provider-info">
               <div className="name-and-button">
                 <h2>{value.fullname}</h2>
-                <div className="button-container">
-                  <Link
-                    onClick={(event) => {
-                      event.preventDefault();
-                      BookNow(value);
-                    }}
-                    className="btn-primary book-service-btn"
-                  >
-                    Book Service
-                  </Link>
-                </div>
+                <Link
+                  onClick={(event) => {
+                    event.preventDefault();
+                    BookNow(value);
+                  }}
+                  className="btn-primary book-service-btn"
+                >
+                  Book Service
+                </Link>
               </div>
-              <p>{value.description}.</p>
+              <p>{value.description}</p>
               <div className="contact-info">
                 <p><strong>Email:</strong> {value.email}</p>
                 <p><strong>Phone:</strong> {value.mobile}</p>
@@ -115,12 +193,12 @@ const PartnerDetail = () => {
           </div>
           <div className="ratings-section">
             <h3>Ratings & Reviews</h3>
-            <p><strong>Average Rating:</strong> {avgRating || '3.5'} / 5</p>
+            <p><strong>Average Rating:</strong> {avgRating} / 5</p>
             <div className="reviews">
-              {(review.slice(0, 3)).map((value, index) => (
+              {review.slice(0, 3).map((reviewValue, index) => (
                 <div className="review" key={index}>
-                  <p><strong>{value.userName}</strong> ({value.date}):</p>
-                  <p>{value.comment}</p>
+                  <p><strong>{reviewValue.userName}</strong> ({reviewValue.date}):</p>
+                  <p>{reviewValue.comment}</p>
                 </div>
               ))}
             </div>
