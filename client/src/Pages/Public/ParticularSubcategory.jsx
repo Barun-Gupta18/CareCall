@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { Server_URL } from "../../utils/config";
 import { showErrorToast } from "../../utils/Toasthelper";
-import '../css/ParticularSubcategory.css'; // Ensure to import the CSS file for styling
+// import '../css/ParticularSubcategory.css'; // Ensure to import the CSS file for styling
 
 function ViewParticularSubCategory() {
   const { register, handleSubmit, formState: { errors }, reset, setFocus } = useForm();
