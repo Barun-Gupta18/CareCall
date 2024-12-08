@@ -13,7 +13,7 @@ const PublicHome = lazy(() => import("./Pages/Public/Home.jsx"));
 const ViewAllCategory = lazy(() => import("./Pages/Public/ViewAllCategory.jsx"));
 const Particularsubcategory = lazy(() => import("./Pages/Public/ParticularSubcategory.jsx"));
 const SubServiceDetails = lazy(() => import("./Pages/Public/SubServiceDetails.jsx"));
-const CategoryDetails = lazy(() => import("./Pages/Public/CategoryDetails.jsx"));
+const CategoryDetails = lazy(() => import("./Pages/Public/Categorydetails.jsx"));
 const AboutUs = lazy(() => import("./Pages/Public/AboutUs.jsx"));
 const PartnerDetail = lazy(() => import("./Pages/Public/PartnerDetail.jsx"));
 const ContactUs = lazy(() => import("./Pages/Public/ContactUs.jsx"));
