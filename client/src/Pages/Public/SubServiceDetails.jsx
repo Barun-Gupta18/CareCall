@@ -5,6 +5,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { Server_URL } from "../../utils/config";
 import { showErrorToast } from "../../utils/Toasthelper";
 import { Container, Row, Col } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { FaUserCheck, FaHeadset, FaShieldAlt, FaThumbsUp, FaDollarSign } from "react-icons/fa";
 
 function ViewParticularPartner() {
