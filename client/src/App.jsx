@@ -53,7 +53,7 @@ const UserViewProfile = lazy(() => import("./Pages/User/UserViewProfile.jsx"));
 const UserForgotPassword = lazy(() => import("./Pages/User/ForgotPassword/UserForgotPassword.jsx"));
 const UserVerifyOTP = lazy(() => import("./Pages/User/ForgotPassword/UserVerfiyOtp.jsx"));
 const UserResetPassword = lazy(() => import("./Pages/User/ForgotPassword/UserResetPassword.jsx"));
-const MyOrders = lazy(() => import("./Pages/User/MyOrders.jsx"));
+const MyOrders = lazy(() => import("./Pages/User/Myorders.jsx"));
 const BookingPage = lazy(() => import("./Pages/User/Bookingpage.jsx"));
 const MoreDetails = lazy(() => import("./Pages/User/MoreDetails.jsx"));
 const ThankYou = lazy(() => import("./Pages/User/ThankYouPage.jsx"));
