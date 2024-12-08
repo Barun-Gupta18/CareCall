@@ -8,15 +8,15 @@ const { userAuthMiddleware, adminAuthMiddleware, partnerAuthMiddleware } = requi
 const fileUpload = require('express-fileupload');
 require('dotenv').config();
 
-// const corsOptions = {
-//   origin: '',
-//   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-//   credentials: true,
-// };
+const corsOptions = {
+  origin: 'https://care-call-frontend.vercel.app',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true,
+};
 
 
-// app.use(cors(corsOptions));
-app.use(cors());
+app.use(cors(corsOptions));
+// app.use(cors());
 app.use(fileUpload({ useTempFiles: true, tempFileDir: '/tmp/' }));
 app.use(express.json());
 app.use(express.static("public"));
