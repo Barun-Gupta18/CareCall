@@ -1,0 +1,93 @@
+/* General Card Styling */
+.service-wrapper {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+}
+
+.service-wrapper:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Image Styling */
+.service-img {
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+.service-img img {
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.service-img:hover img {
+  transform: scale(1.05);
+}
+
+/* Title Styling */
+.service-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  /* cursor: pointer; */
+  transition: color 0.3s ease;
+}
+
+/* .service-title:hover {
+  color: #007bff;
+} */
+
+.service-description {
+  font-size: 1rem;
+  color: #666;
+  margin-top: 10px;
+  /* padding: 0px; */
+}
+
+p.service-description {
+  padding: 0px;
+}
+
+
+/* Link Styling */
+.read-more-link {
+  display: inline-block;
+  margin-top: 10px;
+  color: #007bff;
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.read-more-link:hover {
+  color: #0056b3;
+}
+
+/* Section Title Styling */
+.section-title h4 {
+  /* color: #007bff; */
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.section-title h2 {
+  color: #333;
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 767px) {
+  .service-wrapper {
+    margin-bottom: 20px;
+  }
+
+  .service-title {
+    font-size: 1.25rem;
+  }
+}

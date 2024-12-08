@@ -1,0 +1,56 @@
+/* BookingPage.css */
+.container-background {
+  background: linear-gradient(135deg, #193e40, #132e4f);
+  padding-top: 60px;
+  padding-bottom: 60px;
+  min-height: 100vh;
+}
+
+.form-container {
+  background-color: rgba(0, 40, 72, 0.9);
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  width: 100%;
+  max-width: 600px;
+}
+
+.header-text {
+  color: #FFFFFF;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.icon-container {
+  background-color: #FFFFFF;
+  border: none;
+}
+
+.input {
+  padding-left: 10px;
+}
+
+.date-input {
+  border: 1px solid #ced4da;
+  margin-left: 0;
+}
+
+.button {
+  background: linear-gradient(135deg, #4E54C8, #132e4f);
+  color: #FFFFFF;
+  border: none;
+  padding: 12px;
+  font-size: 18px;
+}
+
+.text-area {
+  height: 80px;
+}
+
+.available {
+  color: green;
+}
+
+.booked {
+  color: red;
+}

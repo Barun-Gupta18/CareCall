@@ -1,0 +1,70 @@
+.service-description {
+  text-align: left;
+  padding: 2rem;
+}
+
+.image-container {
+  position: relative;
+  display: inline-block;
+}
+
+.service-image {
+  width: 80%;
+  border-radius: 50%;
+}
+
+.overlay-circle {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 183, 255, 0.2), rgba(0, 183, 255, 0));
+  z-index: -1;
+}
+
+.large-circle {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120%;
+  height: 120%;
+}
+
+.small-circle {
+  top: 10%;
+  left: 10%;
+  width: 40px;
+  height: 40px;
+}
+
+h2,
+h4 {
+  color: #333;
+  font-weight: 700;
+}
+
+p {
+  color: #555;
+}
+
+.quality-info {
+  background-color: #f9fcff;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.quality-list {
+  list-style: none;
+  padding: 0;
+}
+
+.quality-list li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.icon {
+  color: #28a745;
+  margin-right: 10px;
+  font-size: 1.2rem;
+}
