@@ -12,9 +12,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { useRazorpay } from "react-razorpay";
 
 function BookingPage() {
-
   const Razorpay = useRazorpay();
-
   const { register, handleSubmit, formState: { errors }, reset, setFocus } = useForm();
   const navigate = useNavigate();
   const location = useLocation();
@@ -23,7 +21,6 @@ function BookingPage() {
   const [user, setUser] = useState([]);
   const [slots, setSlots] = useState([]);
   const [minDate, setMinDate] = useState("");
-
   let [slotsSelectedByUser, setSlotsSelectedByUser] = useState([]);
 
   function calculateGrandTotal(e, index) {
@@ -63,10 +60,7 @@ function BookingPage() {
 
   const handleDateChange = async (bookingDate) => {
     try {
-      let data = {
-        bookingDate,
-        id: value._id
-      }
+      let data = { bookingDate, id: value._id };
       const response = await axios.post(`${Server_URL}check-available-slots`, data);
       const { error, message, slots } = response.data;
       error ? alert(message) : setSlots(slots);
@@ -84,8 +78,8 @@ function BookingPage() {
         selectedSlotsCount++;
       }
     });
-    const totalPrice = selectedSlotsCount * slotPrice;
 
+    const totalPrice = selectedSlotsCount * slotPrice;
     const transformedData = {
       date: data.date,
       email: data.email,
@@ -116,27 +110,19 @@ function BookingPage() {
 
   const onSubmit = async (data) => {
     try {
-      localStorage.setItem("bookingData", JSON.stringify(data))
+      localStorage.setItem("bookingData", JSON.stringify(data));
 
       let options = {
         key: "rzp_test_A3RM3Asww6uWvF",
         currency: "INR",
-        amount: 0,
+        amount: (slotsSelectedByUser.length * value.price) * 100,
         name: "Razorpay Demo",
         description: "Testing Payment Gateway",
         image: "https://i.pinimg.com/originals/c1/92/9d/c1929d3492c2f64ab65b43808c072043.jpg",
         handler: paymentHandler,
-        prefill: {
-          name: "",
-          email: "",
-          contact: "",
-        },
-        theme: {
-          color: "#F46432",
-        },
+        prefill: { name: "", email: "", contact: "" },
+        theme: { color: "#F46432" },
       };
-
-      options.amount = (slotsSelectedByUser.length * value.price) * 100;
 
       let rzp = new window.Razorpay(options);
       rzp.open();
@@ -146,13 +132,12 @@ function BookingPage() {
   };
 
   const paymentHandler = async (response) => {
-    let { razorpay_payment_id } = response;
+    const { razorpay_payment_id } = response;
 
-    if (razorpay_payment_id === "") {
+    if (!razorpay_payment_id) {
       alert("Payment Failed");
     } else {
-      let data = JSON.parse(localStorage.getItem("bookingData"))
-
+      const data = JSON.parse(localStorage.getItem("bookingData"));
       const token = utilityFunctions.getCookieValue('userAuthToken');
       const response = await axios.post(`${Server_URL}add-booking-details/${value._id}`, data, {
         headers: { Authorization: token ? `Bearer ${token}` : "" }
@@ -162,21 +147,58 @@ function BookingPage() {
       if (error) {
         message === "SignIn" ? navigate('/user-login') : showErrorToast(message);
       } else {
-        localStorage.removeItem("bookingData")
-        navigate("/user/thank-you")
+        localStorage.removeItem("bookingData");
+        navigate("/user/thank-you");
       }
     }
   };
 
   return (
     <Container fluid className="container-background d-flex justify-content-center align-items-center min-vh-100">
+      <style>
+        {`
+          .container-background {
+            background: linear-gradient(135deg, #193e40, #132e4f);
+            padding-top: 60px;
+            padding-bottom: 60px;
+            min-height: 100vh;
+          }
+          .form-container {
+            background-color: rgba(0, 40, 72, 0.9);
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 100%;
+            max-width: 600px;
+          }
+          .header-text {
+            color: #FFFFFF;
+            font-weight: bold;
+            font-size: 24px;
+          }
+          .icon-container {
+            background-color: #FFFFFF;
+            border: none;
+          }
+          .input {
+            padding-left: 10px;
+          }
+          .button {
+            background: linear-gradient(135deg, #4E54C8, #132e4f);
+            color: #FFFFFF;
+            border: none;
+            padding: 12px;
+            font-size: 18px;
+          }
+        `}
+      </style>
       <Row className="w-100 d-flex justify-content-center align-items-center">
-        <Col md={8} lg={6} className="d-flex justify-content-center">
+        <Col md={8} lg={6}>
           <div className="form-container">
             <h3 className="text-center mb-4 header-text">Add Booking Details</h3>
-
             {user.map((x, index) => (
               <form onSubmit={handleSubmit(handleFormSubmit)} key={index}>
+                {/* Form fields */}
                 <div className="mb-3">
                   <label>Contact Information:</label>
                   <div className="input-group">
@@ -352,9 +374,7 @@ function BookingPage() {
                   </div>
                 )}
 
-                <div className="d-flex justify-content-between mt-4">
-                  <button type="submit" className="btn btn-warning">Proceed to Payment</button>
-                </div>
+                <button type="submit" className="btn w-100 button">Pay-Now</button>
               </form>
             ))}
           </div>
