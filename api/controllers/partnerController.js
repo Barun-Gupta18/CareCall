@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
-// const db = require('../config/db');
-const db = require('../config/connection');
+const getDB = require("../config/connection");
 const { ObjectId } = require('mongodb');
 const nodemailer = require('nodemailer');
 require('dotenv').config();
@@ -53,6 +52,7 @@ partnerController.PartnerRegistration = async (req, res) => {
     const { email } = req.body;
     const collection = "Partner"
     const filter = { email: email }
+    const db = await getDB(); // Get the database instance
     const result = await db.collection(collection).find(filter).toArray();
     if (result.length > 0) {
       res.json({ error: true, message: 'Email Already Exists' });
@@ -89,6 +89,8 @@ partnerController.PartnerLogin = async (req, res) => {
     const { email, password } = req.body;
     const collection = "Partner"
     const filter = { email: email, password: password }
+    const db = await getDB(); // Get the database instance
+
     const result = await db.collection(collection).find(filter).toArray();
     if (result.length > 0) {
       if (result[0].status === 'In-active') {
@@ -116,6 +118,8 @@ partnerController.PartnerChangePassword = async (req, res) => {
     const collection = "Partner"
     const filter = { _id: new ObjectId(req.partnerInfo.id) };
     // console.log(filter);
+    const db = await getDB(); // Get the database instance
+
     const result = await db.collection(collection).find(filter).toArray();
     // console.log(result[0].password);
     if (result[0].password !== req.body.currentpassword) {
@@ -139,6 +143,8 @@ partnerController.ViewPartner = async (req, res) => {
     const collection = "Partner"
     const filter = { _id: new ObjectId(req.partnerInfo.id) };
     // console.log(filter);
+    const db = await getDB(); // Get the database instance
+
     const result = await db.collection(collection).aggregate(
       [{
         $match: filter
@@ -223,6 +229,7 @@ partnerController.PartnerForgotPassword = async (req, res) => {
     const { email, otp } = req.body;
     const filter = { email: email };
     const collection = "Partner";
+    const db = await getDB(); // Get the database instance
 
     const result = await db.collection(collection).find(filter).toArray();
 
@@ -277,6 +284,7 @@ partnerController.PartnerVerfiyOtp = async (req, res) => {
     // console.log(typeof (otp))
     const filter = { email: email }
     const collection = 'Partner'
+    const db = await getDB(); // Get the database instance
 
     const result = await db.collection(collection).find(filter).toArray();
     // console.log(typeof (result[0].otp))
@@ -303,6 +311,7 @@ partnerController.PartnerResetPassword = async (req, res) => {
     const { email, newpassword, confirmpassword } = req.body;
     const filter = { email: email }
     const collection = 'Partner'
+    const db = await getDB(); // Get the database instance
 
     if (newpassword === confirmpassword) {
       await db.collection(collection).updateOne(filter, { $set: { password: newpassword } });
@@ -322,6 +331,8 @@ partnerController.PartnerViewState = async (req, res) => {
     // const filter = { _id: new ObjectId(req.adminInfo.id) }
     // console.log(req.adminInfo.id)
     // console.log(filter)
+    const db = await getDB(); // Get the database instance
+
     const result = await db.collection(collection).find().toArray();
     // console.log(result);
     res.json({ error: false, message: 'Data fetched successfully', result: result });
@@ -339,6 +350,8 @@ partnerController.PartnerViewCity = async (req, res) => {
     const collections = "City"
     let filter = { stateId: new ObjectId(id) }
     // console.log(filter);
+    const db = await getDB(); // Get the database instance
+
     let documents = await db.collection(collections).find(filter).toArray();
     // console.log(documents);
     res.json({ error: false, message: "Document Fetched Successfully", result: documents });
@@ -357,6 +370,8 @@ partnerController.DeletePartner = async (req, res) => {
     const filter = { _id: new ObjectId(req.params._id) }
     // console.log(filter)
     collection = "Partner"
+    const db = await getDB(); // Get the database instance
+
     let document = await db.collection(collection).deleteOne(filter);
 
     res.json({ error: false, message: "Partner deleted Successful" });
@@ -374,6 +389,7 @@ partnerController.UpdatePhoto = async (req, res) => {
     // console.log(req.files)
     const filter = { _id: new ObjectId(req.partnerInfo.id) };
     const { photo } = req.files;
+    const db = await getDB(); // Get the database instance
 
     const result = await cloudinary.uploader.upload(photo.tempFilePath, {
       folder: "DoorStepService"  // Specify the folder name here
@@ -408,6 +424,8 @@ partnerController.EditInfoPartner = async (req, res) => {
       price: req.body.price,
       address: req.body.address
     }
+    const db = await getDB(); // Get the database instance
+
     const result = await db.collection(collection).updateOne(filter, { $set: document });
     // console.log(result);
     res.json({ error: false, message: 'Info updated successfully', result: result });
@@ -427,6 +445,8 @@ partnerController.ReadAvailableSlots = async (req, res) => {
 
     const collection = "Partner";
     const filter = { _id: new ObjectId(id) };
+    const db = await getDB(); // Get the database instance
+
     const result = await db.collection(collection).find(filter).toArray()
 
     // Step 1: Find all bookings for the service provider on the specified date
@@ -467,6 +487,7 @@ partnerController.PartnerBookingData = async (req, res) => {
   try {
     const collection = "Booking";
     const filter = { partnerId: new ObjectId(req.partnerInfo.id) };
+    const db = await getDB(); // Get the database instance
 
     let result = await db.collection(collection).aggregate([
       {
@@ -560,6 +581,8 @@ partnerController.ChangeStatusCompleted = async (req, res) => {
     const collection = "Booking"
     const filter = { _id: new ObjectId(req.params) };
     // console.log(filter);
+    const db = await getDB(); // Get the database instance
+
     await db.collection(collection).updateOne(filter, { $set: { status: 'Completed' } })
     res.json({ error: false, message: 'Status updated successfully' });
   } catch (e) {
@@ -573,6 +596,7 @@ partnerController.ChangeStatusCanceled = async (req, res) => {
 
     const filter = { _id: new ObjectId(bookingId) };
     const filter2 = { booking_id: new ObjectId(bookingId) };
+    const db = await getDB(); // Get the database instance
 
     await db.collection('Booking').updateOne(filter, { $set: { status: 'Canceled' } });
     await db.collection('Booking-Details').deleteMany(filter2);  // Ensure collection name matches exactly

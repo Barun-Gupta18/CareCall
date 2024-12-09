@@ -49,7 +49,7 @@ function PublicNavbar() {
         </div>
 
         {/* <!-- main-menu-area-start --> */}
-        <div id="header-sticky" className="main-menu-area gray-bg ">
+        {/* <div id="header-sticky" className="main-menu-area gray-bg ">
           <div className="container">
             <div className="row">
               <div className=" col-xl-10 col-lg-8">
@@ -82,8 +82,46 @@ function PublicNavbar() {
               </div>
             </div>
           </div>
+        </div> */}
+        {/* <!-- main-menu-area-end --> */}
+
+        {/* <!-- main-menu-area-start --> */}
+        <div id="header-sticky" className="main-menu-area gray-bg ">
+          <div className="container">
+            <div className="row">
+              <div className=" col-xl-10 col-lg-8">
+                <div className="main-menu">
+                  <nav>
+                    <ul>
+                      <li ><Link to="/">Home</Link>
+                      </li>
+                      <li><Link to="/partner-registration">Partners</Link>
+                        <ul className="sub-menu">
+                          <li><Link to="/partner-registration">SignUp</Link></li>
+                          <li><Link to="/partner-login">SignIn</Link></li>
+                        </ul>
+                      </li>
+                      <li><Link to="/about-us">About Us</Link></li>
+                      <li><Link to="/contact-us">contact</Link></li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+              <div className=" col-xl-2 col-lg-4">
+                <div className="make-appointment">
+                  <img src="assets/img/logo/2.png" alt="" />
+                  <Link to="/email">SignUp/SignIn</Link>
+                </div>
+              </div>
+              <div className="col-lg-12">
+                <div className="mobile-menu"></div>
+              </div>
+            </div>
+          </div>
         </div>
         {/* <!-- main-menu-area-end --> */}
+
+
       </header>
     </>
   )

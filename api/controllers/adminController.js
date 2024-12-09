@@ -1,12 +1,10 @@
 const jwt = require('jsonwebtoken');
-const db = require('../config/connection');
+const getDB = require("../config/connection");
 const { ObjectId } = require('mongodb');
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 const jwt_secret = process.env.JWT_SECRET;
 const cloudinary = require('../cloudImages')
-
-
 
 
 const adminController = {};
@@ -16,6 +14,7 @@ adminController.AdminRegistration = async (req, res) => {
     const collection = "Admin"
     const { email } = req.body;
     const filter = { email: email }
+    const db = await getDB(); // Get the database instance
     const result = await db.collection(collection).find(filter).toArray();
     if (result.length > 0) {
       res.json({ error: true, message: 'Email Already Exists' });
@@ -34,6 +33,7 @@ adminController.ViewAdmin = async (req, res) => {
     const filter = { _id: new ObjectId(req.adminInfo.id) }
     // console.log(req.adminInfo.id)
     // console.log(filter)
+    const db = await getDB(); // Get the database instance
     const result = await db.collection(collection).find(filter).toArray();
     // console.log(result);
     res.json({ error: false, message: 'Data fetched successfully', result: result });
@@ -55,6 +55,7 @@ adminController.EditInfoAdmin = async (req, res) => {
       mobile: req.body.mobile,
       address: req.body.address
     }
+    const db = await getDB(); // Get the database instance
     const result = await db.collection(collection).updateOne(filter, { $set: document });
     // console.log(result);
     res.json({ error: false, message: 'Info updated successfully', result: result });
@@ -69,6 +70,7 @@ adminController.DeleteAdmin = async (req, res) => {
     const filter = { _id: new ObjectId(req.params._id) }
     // console.log(filter)
     collection = "Admin"
+    const db = await getDB(); // Get the database instance
     let document = await db.collection(collection).deleteOne(filter);
 
     res.json({ error: false, message: "Admin deleted Successful" });
@@ -88,6 +90,7 @@ adminController.AdminLogin = async (req, res) => {
     // console.log(email)
     const collection = "Admin"
     const filter = { email: email, password: password }
+    const db = await getDB(); // Get the database instance
     const result = await db.collection(collection).find(filter).toArray();
     // console.log(result);
     if (result.length > 0) {
@@ -111,6 +114,7 @@ adminController.AddCategory = async (req, res) => {
   try {
     // const { fullName, email, password, mobile, address } = req.body;
     const collection = "Category"
+    const db = await getDB(); // Get the database instance
     const result1 = await db.collection(collection).find({ categoryname: req.body.categoryname }).toArray();
     if (result1.length > 0) {
       return res.json({ error: true, message: 'Category Already exists' })
@@ -129,6 +133,7 @@ adminController.ViewCategory = async (req, res) => {
     // const filter = { _id: new ObjectId(req.adminInfo.id) }
     // console.log(req.adminInfo.id)
     // console.log(filter)
+    const db = await getDB(); // Get the database instance
     const result = await db.collection(collection).find().toArray();
     // console.log(result);
     res.json({ error: false, message: 'Data fetched successfully', result: result });
@@ -143,6 +148,7 @@ adminController.ViewCategoryPartner = async (req, res) => {
     // const filter = { _id: new ObjectId(req.adminInfo.id) }
     // console.log(req.adminInfo.id)
     // console.log(filter)
+    const db = await getDB(); // Get the database instance
     const result = await db.collection(collection).find().toArray();
     // console.log(result);
     res.json({ error: false, message: 'Data fetched successfully', result: result });
@@ -158,6 +164,7 @@ adminController.DeleteCategory = async (req, res) => {
     // console.log(filter)
 
     // Check if the category exists in the Subcategory collection
+    const db = await getDB(); // Get the database instance
     const subcategoryResult = await db.collection("Subcategory").find({ categoryId: filter }).toArray();
     // console.log(subcategoryResult)
     if (subcategoryResult.length > 0) {
@@ -189,6 +196,7 @@ adminController.AddSubCategory = async (req, res) => {
       briefDescription: req.body.briefDescription,
       photo: ""
     }
+    const db = await getDB(); // Get the database instance
     const result1 = await db.collection(collection).find({ subcategory: req.body.subcategory }).toArray();
     if (result1.length > 0) {
       return res.json({ error: true, message: 'Sub-category Already exists' });
@@ -206,6 +214,7 @@ adminController.ViewSubCategory = async (req, res) => {
   try {
 
     const collections = "Subcategory"
+    const db = await getDB(); // Get the database instance
     let result = await db.collection(collections).aggregate(
       [
         {
@@ -247,6 +256,7 @@ adminController.DeleteSubCategory = async (req, res) => {
     // console.log(filter)
 
     // Check if the category exists in the Partner collection
+    const db = await getDB(); // Get the database instance
     const partnerResult = await db.collection("Partner").find({ subcategory: filter }).toArray();
     // console.log(partnerResult)
     if (partnerResult.length > 0) {
@@ -275,6 +285,7 @@ adminController.ReadSubCat = async (req, res) => {
     const collections = "Subcategory"
     let filter = { categoryId: new ObjectId(id) }
     // console.log(filter);
+    const db = await getDB(); // Get the database instance
     let documents = await db.collection(collections).find(filter).toArray();
     // console.log(documents);
     res.json({ error: false, message: "Document Fetched Successfully", result: documents });
@@ -293,6 +304,7 @@ adminController.ShowAllPartner = async (req, res) => {
     // const filter = { _id: new ObjectId(req.adminInfo.id) }
     // console.log(req.adminInfo.id)
     // console.log(filter)
+    const db = await getDB(); // Get the database instance
     const result = await db.collection(collection).aggregate(
       [
         {
@@ -373,6 +385,7 @@ adminController.ShowAllPartnerPublic = async (req, res) => {
     // const filter = { _id: new ObjectId(req.adminInfo.id) }
     // console.log(req.adminInfo.id)
     // console.log(filter)
+    const db = await getDB(); // Get the database instance
     const result = await db.collection(collection).aggregate(
       [
         {
@@ -453,6 +466,7 @@ adminController.AdminDeletePartner = async (req, res) => {
     const filter = { _id: new ObjectId(req.params._id) }
     // console.log(filter)
     collection = "Partner"
+    const db = await getDB(); // Get the database instance
     await db.collection(collection).deleteOne(filter);
 
     res.json({ error: false, message: " Partner deleted by admin" });
@@ -471,8 +485,8 @@ adminController.AdminStatusUpdate = async (req, res) => {
     // console.log(filter)
     const { status } = req.body; // Expecting new status in the request body
     // console.log(status)
+    const db = await getDB(); // Get the database instance
     collection = "Partner"
-
     await db.collection(collection).updateOne(filter, { $set: { status: status } });
     res.json({ error: false, message: `Status updated to ${status}` });
   }
@@ -486,6 +500,7 @@ adminController.AdminStatusUpdate = async (req, res) => {
 adminController.ShowAllUser = async (req, res) => {
   try {
     const collection = "User"
+    const db = await getDB(); // Get the database instance
     const result = await db.collection(collection).find().toArray();
     // console.log(result);
     res.json({ error: false, message: 'Data fetched successfully', result: result });
@@ -500,6 +515,7 @@ adminController.AdminDeleteUser = async (req, res) => {
     const filter = { _id: new ObjectId(req.params._id) }
     // console.log(filter)
     collection = "User"
+    const db = await getDB(); // Get the database instance
     await db.collection(collection).deleteOne(filter);
 
     res.json({ error: false, message: " User deleted by admin" });
@@ -517,7 +533,7 @@ adminController.AdminForgotPassword = async (req, res) => {
     const { email, otp } = req.body;
     const filter = { email: email };
     const collection = "Admin";
-
+    const db = await getDB(); // Get the database instance
     const result = await db.collection(collection).find(filter).toArray();
 
     if (result.length > 0) {
@@ -571,7 +587,7 @@ adminController.AdminVerfiyOtp = async (req, res) => {
     // console.log(typeof (otp))
     const filter = { email: email }
     const collection = 'Admin'
-
+    const db = await getDB(); // Get the database instance
     const result = await db.collection(collection).find(filter).toArray();
     // console.log(typeof (result[0].otp))
     if (result.length > 0) {
@@ -597,7 +613,7 @@ adminController.AdminResetPassword = async (req, res) => {
     const { email, newpassword, confirmpassword } = req.body;
     const filter = { email: email }
     const collection = 'Admin'
-
+    const db = await getDB(); // Get the database instance
     if (newpassword === confirmpassword) {
       await db.collection(collection).updateOne(filter, { $set: { password: newpassword } });
       await db.collection(collection).updateOne(filter, { $set: { otp: "", otpExpiresAt: "" } });
@@ -615,6 +631,7 @@ adminController.AdminState = async (req, res) => {
     const collection = "State"
     const filter = { statename: req.body.statename }
     // console.log(filter)
+    const db = await getDB(); // Get the database instance
     const result = await db.collection(collection).find(filter).toArray();
     if (result.length > 0) {
       return res.json({ error: true, message: 'State Already Exists' })
@@ -632,6 +649,7 @@ adminController.ViewState = async (req, res) => {
     const collection = "State"
     // console.log(req.adminInfo.id)
     // console.log(filter)
+    const db = await getDB(); // Get the database instance
     const result = await db.collection(collection).find().toArray();
     // console.log(result);
     res.json({ error: false, message: 'Data fetched successfully', result: result });
@@ -647,6 +665,7 @@ adminController.DeleteState = async (req, res) => {
     // console.log(filter)
 
     // Check if the state exists in the City collection
+    const db = await getDB(); // Get the database instance
     const cityResult = await db.collection("City").find({ stateId: filter }).toArray();
     // console.log(cityResult)
     if (cityResult.length > 0) {
@@ -682,6 +701,7 @@ adminController.AdminAddCity = async (req, res) => {
       stateId: new ObjectId(req.body.stateId),
       pincode: req.body.pincode
     }
+    const db = await getDB(); // Get the database instance
     const result = await db.collection(collection).find(filter).toArray();
     if (result.length > 0) {
       return res.json({ error: true, message: 'City Already Exists' })
@@ -696,6 +716,7 @@ adminController.AdminAddCity = async (req, res) => {
 adminController.Viewcity = async (req, res) => {
   try {
     const collection = "City"
+    const db = await getDB(); // Get the database instance
     let result = await db.collection(collection).aggregate(
       [
         {
@@ -731,7 +752,7 @@ adminController.DeleteCity = async (req, res) => {
     // const collection ="student" 
     const filter = new ObjectId(req.params._id)
     // console.log(filter)
-
+    const db = await getDB(); // Get the database instance
     const partnerResult = await db.collection("Partner").find({ city: filter }).toArray();
     // console.log(partnerResult)
     if (partnerResult.length > 0) {
@@ -757,6 +778,7 @@ adminController.AdminChangePassword = async (req, res) => {
     const collection = "Admin"
     const filter = { _id: new ObjectId(req.adminInfo.id) };
     // console.log(filter);
+    const db = await getDB(); // Get the database instance
     const result = await db.collection(collection).find(filter).toArray();
     // console.log(result[0].password);
     if (result[0].password !== req.body.currentpassword) {
@@ -779,6 +801,7 @@ adminController.UpdatePhoto = async (req, res) => {
     // console.log(req.files)
     const filter = { _id: new ObjectId(req.adminInfo.id) };
     const { photo } = req.files;
+    const db = await getDB(); // Get the database instance
     const result = await cloudinary.uploader.upload(photo.tempFilePath, {
       folder: "DoorStepService"  // Specify the folder name here
     });
@@ -804,7 +827,7 @@ adminController.ViewSingleCategory = async (req, res) => {
     const { id } = req.params;
     const collection = "Category"
     let filter = { _id: new ObjectId(id) }
-
+    const db = await getDB(); // Get the database instance
     let result = await db.collection(collection).find(filter).toArray();
     // console.log(result)
     res.json({ error: false, message: 'Data fetched successfully', result: result });
@@ -819,6 +842,7 @@ adminController.CategoryUpdatePhoto = async (req, res) => {
     const { id } = req.params;
     const filter = { _id: new ObjectId(id) };
     const { photo } = req.files;
+    const db = await getDB(); // Get the database instance
     const result = await cloudinary.uploader.upload(photo.tempFilePath, {
       folder: "DoorStepService"  // Specify the folder name here
     });
@@ -844,7 +868,7 @@ adminController.ViewSingleSubcategory = async (req, res) => {
     const { id } = req.params;
     const collection = "Subcategory"
     let filter = { _id: new ObjectId(id) }
-
+    const db = await getDB(); // Get the database instance
     let result = await db.collection(collection).aggregate(
       [
         { $match: filter },
@@ -882,6 +906,7 @@ adminController.SubcategoryUpdatePhoto = async (req, res) => {
     const { id } = req.params;
     const filter = { _id: new ObjectId(id) };
     const { photo } = req.files;
+    const db = await getDB(); // Get the database instance
     const result = await cloudinary.uploader.upload(photo.tempFilePath, {
       folder: "DoorStepService"  // Specify the folder name here
     });
@@ -909,7 +934,7 @@ adminController.ViewParticularSubcategory = async (req, res) => {
     const collection = "Subcategory"
     let filter = { categoryId: new ObjectId(id) }
     // console.log(filter)
-
+    const db = await getDB(); // Get the database instance
     let result = await db.collection(collection).
       // find(filter).toArray()
       aggregate(
@@ -950,7 +975,7 @@ adminController.ViewParticularPartner = async (req, res) => {
     const collection = "Partner"
     let filter = { subcategory: new ObjectId(id) }
     // console.log(filter)
-
+    const db = await getDB(); // Get the database instance
     let result = await db.collection(collection).
       // find(filter).toArray()
       aggregate(
@@ -1036,7 +1061,7 @@ adminController.ViewPartnerDetail = async (req, res) => {
     const collection = "Partner"
     let filter = { _id: new ObjectId(id) }
     // console.log(filter)
-
+    const db = await getDB(); // Get the database instance
     let result = await db.collection(collection).
       // find(filter).toArray()
       aggregate(
@@ -1123,7 +1148,7 @@ adminController.ViewSingleSubcategoryData = async (req, res) => {
     const collection = "Subcategory"
     let filter = { _id: new ObjectId(id) }
     // console.log(filter)
-
+    const db = await getDB(); // Get the database instance
     let result = await db.collection(collection).
       // find(filter).toArray()
       aggregate(
@@ -1165,7 +1190,7 @@ adminController.ViewParticularCategoryData = async (req, res) => {
     const collection = "Category"
     let filter = { _id: new ObjectId(id) }
     // console.log(filter)
-
+    const db = await getDB(); // Get the database instance
     let result = await db.collection(collection).find(filter).toArray()
     res.json({ error: false, message: 'Data fetched successfully', result: result });
     // console.log(result)
@@ -1177,6 +1202,7 @@ adminController.ViewParticularCategoryData = async (req, res) => {
 adminController.AdminBookingData = async (req, res) => {
   try {
     const collection = "Booking"
+    const db = await getDB(); // Get the database instance
     let result = await db.collection(collection)
       // find(filter).toArray()
       .aggregate([
@@ -1265,6 +1291,7 @@ adminController.AdminBookingData = async (req, res) => {
 adminController.ViewAllReviews = async (req, res) => {
   try {
     const collection = "Review"
+    const db = await getDB(); // Get the database instance
     const result = await db.collection(collection)
       // .find().toArray();
       .aggregate([
@@ -1297,6 +1324,7 @@ adminController.ViewAllReviews = async (req, res) => {
 adminController.ViewParticularReviews = async (req, res) => {
   try {
     const collection = "Review"
+    const db = await getDB(); // Get the database instance
     const filter = { partnerId: new ObjectId(req.params.id) }
     const result = await db.collection(collection)
       // .find().toArray();
@@ -1331,7 +1359,7 @@ adminController.ViewParticularReviews = async (req, res) => {
 adminController.AddContactUs = async (req, res) => {
   try {
     const collection = "Contact-us"
-
+    const db = await getDB(); // Get the database instance
     await db.collection(collection).insertOne(req.body);
 
     res.json({ error: false, message: 'Contact-us Added Successfully', });

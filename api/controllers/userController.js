@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const db = require('../config/connection');
+const getDB = require("../config/connection");
 const { ObjectId } = require('mongodb');
 const nodemailer = require('nodemailer');
 require('dotenv').config();
@@ -23,6 +23,7 @@ userController.UserRegistration = async (req, res) => {
       pincode: req.body.pincode,
       address: req.body.address
     }
+    const db = await getDB(); // Get the database instance
     const result = await db.collection(collection).find(filter).toArray();
     if (result.length > 0) {
       res.json({ error: true, message: 'Email Already Exists' });
@@ -40,6 +41,7 @@ userController.UserLogin = async (req, res) => {
     const { email, password } = req.body;
     const collection = "User"
     const filter = { email: email, password: password }
+    const db = await getDB(); // Get the database instance
     const result = await db.collection(collection).find(filter).toArray();
     if (result.length > 0) {
       const payload = {
@@ -63,7 +65,7 @@ userController.UserForgotPassword = async (req, res) => {
     const { email, otp } = req.body;
     const filter = { email: email };
     const collection = "User";
-
+    const db = await getDB(); // Get the database instance
     const result = await db.collection(collection).find(filter).toArray();
 
     if (result.length > 0) {
@@ -117,7 +119,7 @@ userController.UserVerfiyOtp = async (req, res) => {
     // console.log(typeof (otp))
     const filter = { email: email }
     const collection = 'User'
-
+    const db = await getDB(); // Get the database instance
     const result = await db.collection(collection).find(filter).toArray();
     // console.log(typeof (result[0].otp))
     if (result.length > 0) {
@@ -143,7 +145,7 @@ userController.UserResetPassword = async (req, res) => {
     const { email, newpassword, confirmpassword } = req.body;
     const filter = { email: email }
     const collection = 'User'
-
+    const db = await getDB(); // Get the database instance
     if (newpassword === confirmpassword) {
       await db.collection(collection).updateOne(filter, { $set: { password: newpassword } });
       await db.collection(collection).updateOne(filter, { $set: { otp: "" } });
@@ -162,6 +164,7 @@ userController.UserChangePassword = async (req, res) => {
     const collection = "User"
     const filter = { _id: new ObjectId(req.userInfo.id) };
     // console.log(filter);
+    const db = await getDB(); // Get the database instance
     const result = await db.collection(collection).find(filter).toArray();
     // console.log(result[0].password);
     if (result[0].password !== req.body.currentpassword) {
@@ -185,6 +188,7 @@ userController.ViewUser = async (req, res) => {
     const collection = "User"
     const filter = { _id: new ObjectId(req.userInfo.id) };
     // console.log(filter);
+    const db = await getDB(); // Get the database instance
     const result = await db.collection(collection)
       // .find(filter).toArray();
       .aggregate(
@@ -240,6 +244,7 @@ userController.DeleteUser = async (req, res) => {
     const filter = { _id: new ObjectId(req.params._id) }
     // console.log(filter)
     collection = "User"
+    const db = await getDB(); // Get the database instance
     let document = await db.collection(collection).deleteOne(filter);
 
     res.json({ error: false, message: "User deleted Successful" });
@@ -258,7 +263,7 @@ userController.UpdatePhoto = async (req, res) => {
     // console.log(req.files)
     const filter = { _id: new ObjectId(req.userInfo.id) };
     const { photo } = req.files;
-
+    const db = await getDB(); // Get the database instance
     const result = await cloudinary.uploader.upload(photo.tempFilePath, {
       folder: "DoorStepService"  // Specify the folder name here
     });
@@ -292,6 +297,7 @@ userController.EditInfoUser = async (req, res) => {
       mobile: req.body.mobile,
       address: req.body.address
     }
+    const db = await getDB(); // Get the database instance
     const result = await db.collection(collection).updateOne(filter, { $set: document });
     // console.log(result);
     res.json({ error: false, message: 'Info updated successfully', result: result });
@@ -303,6 +309,7 @@ userController.EditInfoUser = async (req, res) => {
 userController.ViewCategoryUser = async (req, res) => {
   try {
     const collection = "Category"
+    const db = await getDB(); // Get the database instance
     const result = await db.collection(collection).find().toArray();
     // console.log(result);
     res.json({ error: false, message: 'Data fetched successfully', result: result });
@@ -326,7 +333,7 @@ userController.ViewParticularCategoryProtected = async (req, res) => {
     const collection = "Category"
     let filter = { _id: new ObjectId(id) }
     // console.log(filter)
-
+    const db = await getDB(); // Get the database instance
     let result = await db.collection(collection).find(filter).toArray()
     res.json({ error: false, message: 'Data fetched successfully', result: result });
     // console.log(result)
@@ -342,7 +349,7 @@ userController.ViewParticularSubCategoryProtected = async (req, res) => {
     const collection = "Subcategory"
     let filter = { categoryId: new ObjectId(id) }
     // console.log(filter)
-
+    const db = await getDB(); // Get the database instance
     let result = await db.collection(collection).
       // find(filter).toArray()
       aggregate(
@@ -383,7 +390,7 @@ userController.UserSubCategoryDetails = async (req, res) => {
     const collection = "Subcategory"
     let filter = { _id: new ObjectId(id) }
     // console.log(filter)
-
+    const db = await getDB(); // Get the database instance
     let result = await db.collection(collection).
       // find(filter).toArray()
       aggregate(
@@ -425,7 +432,7 @@ userController.UserParticularPartner = async (req, res) => {
     const collection = "Partner"
     let filter = { subcategory: new ObjectId(id) }
     // console.log(filter)
-
+    const db = await getDB(); // Get the database instance
     let result = await db.collection(collection).
       // find(filter).toArray()
       aggregate(
@@ -509,7 +516,7 @@ userController.UserPartnerDetails = async (req, res) => {
     const collection = "Partner"
     let filter = { _id: new ObjectId(id) }
     // console.log(filter)
-
+    const db = await getDB(); // Get the database instance
     let result = await db.collection(collection).
       // find(filter).toArray()
       aggregate(
@@ -590,7 +597,7 @@ userController.UserPartnerDetails = async (req, res) => {
 userController.AddBookingDetails = async (req, res) => {
 
   const { date, email, mobile, state, city, pincode, address, slots, totalPrice, category, subcategory } = req.body;
-
+  const db = await getDB(); // Get the database instance
   // Validate that slots were selected
   if (!slots || slots.length === 0) {
     return res.json({ error: true, message: "No slots selected. Please select at least one slot." });
@@ -651,7 +658,7 @@ userController.UserBookingData = async (req, res) => {
   try {
     const collection = "Booking";
     const filter = { userId: new ObjectId(req.userInfo.id) };
-
+    const db = await getDB(); // Get the database instance
     let result = await db.collection(collection).aggregate([
       {
         $match: filter
@@ -751,7 +758,8 @@ userController.UserAddReview = async (req, res) => {
       comment: req.body.reviewText,
       date: new Date().toISOString().split('T')[0],
     }
-    console.log(document)
+    // console.log(document)
+    const db = await getDB(); // Get the database instance
     await db.collection(collection).insertOne(document);
     res.json({ error: false, message: 'Review added successfully' })
   } catch (e) {
@@ -765,7 +773,7 @@ userController.UserChangeStatusCanceled = async (req, res) => {
 
     const filter = { _id: new ObjectId(bookingId) };
     const filter2 = { booking_id: new ObjectId(bookingId) };
-
+    const db = await getDB(); // Get the database instance
     await db.collection('Booking').updateOne(filter, { $set: { status: 'Canceled' } });
     await db.collection('Booking-Details').deleteMany(filter2);  // Ensure collection name matches exactly
 
@@ -782,6 +790,7 @@ userController.UserCheckEmail = async (req, res) => {
     const collection = "User"
     const filter = { email: req.body.email }
     // console.log(filter)
+    const db = await getDB(); // Get the database instance
     const result = await db.collection(collection).find(filter).toArray();
 
     res.json({ error: false, message: 'Data fetched successfully', result: result });
