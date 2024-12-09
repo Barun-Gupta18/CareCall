@@ -7,7 +7,6 @@ import { utilityFunctions } from "../../utils/module";
 import { Server_URL } from "../../utils/config";
 import { showErrorToast, showSuccessToast } from "../../utils/Toasthelper";
 import { FaStar } from "react-icons/fa";
-// import "./MyOrders.css";
 
 function UserMyOrders() {
   const { register, handleSubmit, formState: { errors }, reset, setFocus } = useForm();
@@ -66,7 +65,6 @@ function UserMyOrders() {
   async function handleSubmitReview() {
     try {
       const payload = { currentValue, reviewText, selectedPartnerId, selectedUserId };
-      // console.log(payload)
       const token = utilityFunctions.getCookieValue("userAuthToken");
       const response = await axios.post(`${Server_URL}user-add-review`, payload, {
         headers: { Authorization: token ? `Bearer ${token}` : "" }
@@ -89,12 +87,12 @@ function UserMyOrders() {
         <div className="row">
           {booking.map((value, index) => (
             <div className="col-lg-4 col-md-6 mb-4" key={index}>
-              <div className="service-card">
-                <div className="service-img">
+              <div style={styles.serviceCard}>
+                <div style={styles.serviceImg}>
                   <img src={value.subcategoryPhoto ? value.subcategoryPhoto : '/whychoose.png'} alt={value.subcategoryName} />
                 </div>
-                <div className="service-content">
-                  <h2 className="service-title">{value.subcategoryInfo}</h2>
+                <div style={styles.serviceContent}>
+                  <h2 style={styles.serviceTitle}>{value.subcategoryInfo}</h2>
                   <h5>Total: {value.total}</h5>
                   <h5>Status: {value.status}</h5>
                   <h5>Date: {value.date}</h5>
@@ -111,7 +109,6 @@ function UserMyOrders() {
                       </Link>
                     )}
                   </div>
-
                 </div>
               </div>
             </div>
@@ -151,57 +148,89 @@ function UserMyOrders() {
 }
 
 const styles = {
+  serviceCard: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    textAlign: 'center',
+    padding: '15px',
+    backgroundColor: '#fff',
+    border: '1px solid #ddd',
+    borderRadius: '8px',
+    minHeight: '400px',
+    width: '100%',
+    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
+  },
+  serviceImg: {
+    width: '100%',
+    height: '200px',
+    objectFit: 'cover',
+    borderRadius: '8px',
+  },
+  serviceContent: {
+    marginTop: '15px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  serviceTitle: {
+    fontSize: '1.25rem',
+    fontWeight: 'bold',
+    color: '#333',
+    margin: '10px 0',
+  },
   modalBody: {
-    padding: "30px",
-    borderRadius: "8px",
-    boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
-    backgroundColor: "#fff",
+    padding: '30px',
+    borderRadius: '8px',
+    boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
+    backgroundColor: '#fff',
   },
   container: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    textAlign: "center",
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    textAlign: 'center',
   },
   heading: {
-    fontSize: "24px",
-    fontWeight: "bold",
-    marginBottom: "15px",
-    color: "#333",
+    fontSize: '24px',
+    fontWeight: 'bold',
+    marginBottom: '15px',
+    color: '#333',
   },
   stars: {
-    display: "flex",
-    justifyContent: "center",
-    marginBottom: "20px",
+    display: 'flex',
+    justifyContent: 'center',
+    marginBottom: '20px',
   },
   starIcon: {
-    cursor: "pointer",
-    marginRight: "8px",
-    transition: "transform 0.2s ease-in-out",
+    cursor: 'pointer',
+    marginRight: '8px',
+    transition: 'transform 0.2s ease-in-out',
   },
   textarea: {
-    border: "1px solid #ddd",
-    borderRadius: "8px",
-    width: "100%",
-    minHeight: "100px",
-    padding: "12px",
-    marginBottom: "20px",
-    fontSize: "16px",
-    resize: "vertical",
-    boxShadow: "inset 0px 1px 4px rgba(0, 0, 0, 0.1)",
-    transition: "border-color 0.3s ease",
+    border: '1px solid #ddd',
+    borderRadius: '8px',
+    width: '100%',
+    minHeight: '100px',
+    padding: '12px',
+    marginBottom: '20px',
+    fontSize: '16px',
+    resize: 'vertical',
+    boxShadow: 'inset 0px 1px 4px rgba(0, 0, 0, 0.1)',
+    transition: 'border-color 0.3s ease',
   },
   button: {
-    backgroundColor: "#FFBA5A",
-    border: "none",
-    color: "#fff",
-    padding: "12px 24px",
-    borderRadius: "8px",
-    cursor: "pointer",
-    fontSize: "16px",
-    fontWeight: "bold",
-    boxShadow: "0px 4px 8px rgba(255, 186, 90, 0.4)",
-    transition: "background-color 0.3s ease, box-shadow 0.3s ease",
+    backgroundColor: '#FFBA5A',
+    border: 'none',
+    color: '#fff',
+    padding: '12px 24px',
+    borderRadius: '8px',
+    cursor: 'pointer',
+    fontSize: '16px',
+    fontWeight: 'bold',
+    boxShadow: '0px 4px 8px rgba(255, 186, 90, 0.4)',
+    transition: 'background-color 0.3s ease, box-shadow 0.3s ease',
   },
 };
 

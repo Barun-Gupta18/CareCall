@@ -96,7 +96,7 @@ function ViewParticularPartner() {
           height: 120%;
         }
 
-        h2, h4 {
+         h4 {
           color: #333;
           font-weight: 700;
         }

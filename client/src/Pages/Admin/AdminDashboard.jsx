@@ -4,7 +4,6 @@ import { FaClipboardList, FaTools, FaUsers, FaShoppingCart, FaDollarSign } from 
 import { showErrorToast } from "../../utils/Toasthelper";
 import { utilityFunctions } from "../../utils/module";
 import { Server_URL } from "../../utils/config";
-// import '../css/AdminDashboard.css';
 
 function AdminDashboard() {
   const [category, setCategory] = useState(0);
@@ -108,84 +107,133 @@ function AdminDashboard() {
 
   return (
     <>
-      <div className="breadcrumb-banner-area ptb-120 bg-opacity" style={{ backgroundImage: 'url("/assets/img/bg/6.jpg")' }}>
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-12">
-              <div className="breadcrumb-text text-center">
-                <h2>Dashboard</h2>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div style={{
+        paddingTop: '120px',
+        paddingBottom: '120px',
+        backgroundImage: 'url("/assets/img/bg/6.jpg")',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        textAlign: 'center',
+      }}>
+        <h2>Dashboard</h2>
       </div>
 
-      <div className="admin-dashboard">
-        <div className="stats-cards">
-          <div className="card">
-            <FaClipboardList className="icon" />
-            <div className="card-info">
-              <h4>Total Services</h4>
-              <p>{category}</p>
+      <div style={{ padding: '20px' }}>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+          gap: '20px',
+          marginBottom: '40px',
+        }}>
+          <div style={{
+            backgroundColor: '#1d3557',
+            color: '#fff',
+            padding: '20px',
+            borderRadius: '12px',
+            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+            display: 'flex',
+            alignItems: 'center',
+            transition: 'transform 0.3s, box-shadow 0.3s',
+          }}>
+            <FaClipboardList style={{ fontSize: '2.5rem', marginRight: '15px', color: '#f1faee' }} />
+            <div>
+              <h4 style={{ marginBottom: '8px', color: '#f1faee', fontSize: '1.2rem', fontWeight: '500' }}>Total Services</h4>
+              <p style={{ fontSize: '1.5rem', color: '#f1faee', fontWeight: 'bold', margin: '0' }}>{category}</p>
             </div>
           </div>
-          <div className="card">
-            <FaTools className="icon" />
-            <div className="card-info">
-              <h4>Total Sub-Services</h4>
-              <p>{subcategory}</p>
+          <div style={{
+            backgroundColor: '#1d3557',
+            color: '#fff',
+            padding: '20px',
+            borderRadius: '12px',
+            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+            display: 'flex',
+            alignItems: 'center',
+            transition: 'transform 0.3s, box-shadow 0.3s',
+          }}>
+            <FaTools style={{ fontSize: '2.5rem', marginRight: '15px', color: '#f1faee' }} />
+            <div>
+              <h4 style={{ marginBottom: '8px', color: '#f1faee', fontSize: '1.2rem', fontWeight: '500' }}>Total Sub-Services</h4>
+              <p style={{ fontSize: '1.5rem', color: '#f1faee', fontWeight: 'bold', margin: '0' }}>{subcategory}</p>
             </div>
           </div>
-          <div className="card">
-            <FaUsers className="icon" />
-            <div className="card-info">
-              <h4>Total Partners</h4>
-              <p>{partner}</p>
+          <div style={{
+            backgroundColor: '#1d3557',
+            color: '#fff',
+            padding: '20px',
+            borderRadius: '12px',
+            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+            display: 'flex',
+            alignItems: 'center',
+            transition: 'transform 0.3s, box-shadow 0.3s',
+          }}>
+            <FaUsers style={{ fontSize: '2.5rem', marginRight: '15px', color: '#f1faee' }} />
+            <div>
+              <h4 style={{ marginBottom: '8px', color: '#f1faee', fontSize: '1.2rem', fontWeight: '500' }}>Total Partners</h4>
+              <p style={{ fontSize: '1.5rem', color: '#f1faee', fontWeight: 'bold', margin: '0' }}>{partner}</p>
             </div>
           </div>
-          <div className="card">
-            <FaShoppingCart className="icon" />
-            <div className="card-info">
-              <h4>Total Orders</h4>
-              <p>{order}</p>
+          <div style={{
+            backgroundColor: '#1d3557',
+            color: '#fff',
+            padding: '20px',
+            borderRadius: '12px',
+            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+            display: 'flex',
+            alignItems: 'center',
+            transition: 'transform 0.3s, box-shadow 0.3s',
+          }}>
+            <FaShoppingCart style={{ fontSize: '2.5rem', marginRight: '15px', color: '#f1faee' }} />
+            <div>
+              <h4 style={{ marginBottom: '8px', color: '#f1faee', fontSize: '1.2rem', fontWeight: '500' }}>Total Orders</h4>
+              <p style={{ fontSize: '1.5rem', color: '#f1faee', fontWeight: 'bold', margin: '0' }}>{order}</p>
             </div>
           </div>
-          <div className="card">
-            <FaDollarSign className="icon" />
-            <div className="card-info">
-              <h4>Total Income</h4>
-              <p>${income}</p>
+          <div style={{
+            backgroundColor: '#1d3557',
+            color: '#fff',
+            padding: '20px',
+            borderRadius: '12px',
+            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+            display: 'flex',
+            alignItems: 'center',
+            transition: 'transform 0.3s, box-shadow 0.3s',
+          }}>
+            <FaDollarSign style={{ fontSize: '2.5rem', marginRight: '15px', color: '#f1faee' }} />
+            <div>
+              <h4 style={{ marginBottom: '8px', color: '#f1faee', fontSize: '1.2rem', fontWeight: '500' }}>Total Income</h4>
+              <p style={{ fontSize: '1.5rem', color: '#f1faee', fontWeight: 'bold', margin: '0' }}>${income}</p>
             </div>
           </div>
         </div>
 
-        <div className="bookings-table">
+        <div>
           <h3>Bookings</h3>
-          <table>
+          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
               <tr>
-                <th>S.no</th>
-                <th>Service</th>
-                <th>Customer</th>
-                <th>Partner</th>
-                <th>Date</th>
-                <th>Status</th>
+                <th style={{ textAlign: 'left', padding: '10px', border: '1px solid #ddd' }}>S.no</th>
+                <th style={{ textAlign: 'left', padding: '10px', border: '1px solid #ddd' }}>Service</th>
+                <th style={{ textAlign: 'left', padding: '10px', border: '1px solid #ddd' }}>Customer</th>
+                <th style={{ textAlign: 'left', padding: '10px', border: '1px solid #ddd' }}>Partner</th>
+                <th style={{ textAlign: 'left', padding: '10px', border: '1px solid #ddd' }}>Date</th>
+                <th style={{ textAlign: 'left', padding: '10px', border: '1px solid #ddd' }}>Status</th>
               </tr>
             </thead>
             <tbody>
               {bookings.length > 0 ? (
                 bookings.slice(0, 10).map((booking, index) => (
                   <tr key={index}>
-                    <td>{index + 1}</td>
-                    <td>{booking.categoryInfo}</td>
-                    <td>{booking.userName}</td>
-                    <td>{booking.partnerName}</td>
-                    <td>{booking.date}</td>
-                    <td style={{ color: getStatusColor(booking.status) }}>{booking.status}</td>
+                    <td style={{ padding: '10px', border: '1px solid #ddd' }}>{index + 1}</td>
+                    <td style={{ padding: '10px', border: '1px solid #ddd' }}>{booking.categoryInfo}</td>
+                    <td style={{ padding: '10px', border: '1px solid #ddd' }}>{booking.userName}</td>
+                    <td style={{ padding: '10px', border: '1px solid #ddd' }}>{booking.partnerName}</td>
+                    <td style={{ padding: '10px', border: '1px solid #ddd' }}>{booking.date}</td>
+                    <td style={{ padding: '10px', border: '1px solid #ddd', color: getStatusColor(booking.status) }}>{booking.status}</td>
                   </tr>
                 ))
               ) : (
-                <tr><td colSpan="6">No bookings available</td></tr>
+                <tr><td colSpan="6" style={{ padding: '10px', border: '1px solid #ddd' }}>No bookings available</td></tr>
               )}
             </tbody>
           </table>
