@@ -33,7 +33,7 @@ function UserMyOrders() {
 
   const colors = {
     orange: "#FFBA5A",
-    grey: "#a9a9a9"
+    grey: "#a9a9a9",
   };
 
   async function getBookingData() {
@@ -41,7 +41,7 @@ function UserMyOrders() {
       const token = utilityFunctions.getCookieValue("userAuthToken");
       const url = `${Server_URL}user-booking-data`;
       const { data } = await axios.get(url, {
-        headers: { Authorization: token ? `Bearer ${token}` : "" }
+        headers: { Authorization: token ? `Bearer ${token}` : "" },
       });
       if (data.error) {
         if (data.message === "SignIn") navigate("/user-login");
@@ -67,7 +67,7 @@ function UserMyOrders() {
       const payload = { currentValue, reviewText, selectedPartnerId, selectedUserId };
       const token = utilityFunctions.getCookieValue("userAuthToken");
       const response = await axios.post(`${Server_URL}user-add-review`, payload, {
-        headers: { Authorization: token ? `Bearer ${token}` : "" }
+        headers: { Authorization: token ? `Bearer ${token}` : "" },
       });
       const { error, message } = response.data;
       if (error) {
@@ -81,6 +81,87 @@ function UserMyOrders() {
     }
   }
 
+  const styles = {
+    serviceCard: {
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-between",
+      alignItems: "center",
+      textAlign: "center",
+      padding: "15px",
+      backgroundColor: "#fff",
+      border: "1px solid #ddd",
+      borderRadius: "8px",
+      minHeight: "400px",
+      width: "100%",
+      boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+    },
+    serviceImg: {
+      width: "100%",
+      height: "200px",
+      objectFit: "cover",
+      borderRadius: "8px",
+    },
+    serviceContent: {
+      marginTop: "15px",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+    },
+    serviceTitle: {
+      fontSize: "1.25rem",
+      fontWeight: "bold",
+      color: "#333",
+      margin: "10px 0",
+    },
+    serviceText: {
+      fontSize: "1rem",
+      color: "#555",
+    },
+    modalBody: {
+      padding: "20px",
+      textAlign: "center",
+    },
+    container: {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+    },
+    heading: {
+      marginBottom: "20px",
+      fontSize: "1.5rem",
+      color: "#333",
+    },
+    stars: {
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "center",
+      marginBottom: "20px",
+    },
+    textarea: {
+      width: "100%",
+      minHeight: "100px",
+      padding: "10px",
+      marginBottom: "20px",
+      borderRadius: "5px",
+      border: "1px solid #ddd",
+      fontSize: "1rem",
+    },
+    button: {
+      backgroundColor: "#FFBA5A",
+      border: "none",
+      padding: "10px 20px",
+      color: "#fff",
+      fontSize: "1rem",
+      borderRadius: "5px",
+      cursor: "pointer",
+    },
+    starIcon: {
+      cursor: "pointer",
+      marginRight: "5px",
+    },
+  };
+
   return (
     <>
       <div className="container">
@@ -88,23 +169,30 @@ function UserMyOrders() {
           {booking.map((value, index) => (
             <div className="col-lg-4 col-md-6 mb-4" key={index}>
               <div style={styles.serviceCard}>
-                <div style={styles.serviceImg}>
-                  <img src={value.subcategoryPhoto ? value.subcategoryPhoto : '/whychoose.png'} alt={value.subcategoryName} />
+                <div>
+                  <img
+                    src={value.subcategoryPhoto ? value.subcategoryPhoto : '/whychoose.png'}
+                    alt={value.subcategoryName}
+                    style={styles.serviceImg}
+                  />
                 </div>
                 <div style={styles.serviceContent}>
                   <h2 style={styles.serviceTitle}>{value.subcategoryInfo}</h2>
-                  <h5>Total: {value.total}</h5>
-                  <h5>Status: {value.status}</h5>
-                  <h5>Date: {value.date}</h5>
+                  <h5 style={styles.serviceText}>Total: {value.total}</h5>
+                  <h5 style={styles.serviceText}>Status: {value.status}</h5>
+                  <h5 style={styles.serviceText}>Date: {value.date}</h5>
                   <div style={{ display: "flex", justifyContent: "center" }}>
                     <Link
-                      style={{ marginRight: "20px" }}
+                      style={{ marginRight: "20px", color: "#007bff" }}
                       onClick={(e) => { e.preventDefault(); goMoreDetails(value); }}
                     >
                       View Details
                     </Link>
                     {value.status === 'Completed' && (
-                      <Link onClick={(e) => { e.preventDefault(); handleShow(value.partnerId, value.userId); }}>
+                      <Link
+                        style={{ color: "#28a745" }}
+                        onClick={(e) => { e.preventDefault(); handleShow(value.partnerId, value.userId); }}
+                      >
                         Give Review
                       </Link>
                     )}
@@ -146,92 +234,5 @@ function UserMyOrders() {
     </>
   );
 }
-
-const styles = {
-  serviceCard: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    textAlign: 'center',
-    padding: '15px',
-    backgroundColor: '#fff',
-    border: '1px solid #ddd',
-    borderRadius: '8px',
-    minHeight: '400px',
-    width: '100%',
-    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
-  },
-  serviceImg: {
-    width: '100%',
-    height: '200px',
-    objectFit: 'cover',
-    borderRadius: '8px',
-  },
-  serviceContent: {
-    marginTop: '15px',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  serviceTitle: {
-    fontSize: '1.25rem',
-    fontWeight: 'bold',
-    color: '#333',
-    margin: '10px 0',
-  },
-  modalBody: {
-    padding: '30px',
-    borderRadius: '8px',
-    boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
-    backgroundColor: '#fff',
-  },
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    textAlign: 'center',
-  },
-  heading: {
-    fontSize: '24px',
-    fontWeight: 'bold',
-    marginBottom: '15px',
-    color: '#333',
-  },
-  stars: {
-    display: 'flex',
-    justifyContent: 'center',
-    marginBottom: '20px',
-  },
-  starIcon: {
-    cursor: 'pointer',
-    marginRight: '8px',
-    transition: 'transform 0.2s ease-in-out',
-  },
-  textarea: {
-    border: '1px solid #ddd',
-    borderRadius: '8px',
-    width: '100%',
-    minHeight: '100px',
-    padding: '12px',
-    marginBottom: '20px',
-    fontSize: '16px',
-    resize: 'vertical',
-    boxShadow: 'inset 0px 1px 4px rgba(0, 0, 0, 0.1)',
-    transition: 'border-color 0.3s ease',
-  },
-  button: {
-    backgroundColor: '#FFBA5A',
-    border: 'none',
-    color: '#fff',
-    padding: '12px 24px',
-    borderRadius: '8px',
-    cursor: 'pointer',
-    fontSize: '16px',
-    fontWeight: 'bold',
-    boxShadow: '0px 4px 8px rgba(255, 186, 90, 0.4)',
-    transition: 'background-color 0.3s ease, box-shadow 0.3s ease',
-  },
-};
 
 export default UserMyOrders;

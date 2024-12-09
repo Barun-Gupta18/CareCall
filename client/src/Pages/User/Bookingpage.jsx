@@ -20,8 +20,6 @@ function BookingPage() {
   const location = useLocation();
   const value = location.state?.value;
 
-  console.log(value)
-
   const [user, setUser] = useState([]);
   const [slots, setSlots] = useState([]);
   const [minDate, setMinDate] = useState("");
@@ -65,7 +63,10 @@ function BookingPage() {
 
   const handleDateChange = async (bookingDate) => {
     try {
-      let data = { bookingDate, id: value._id }
+      let data = {
+        bookingDate,
+        id: value._id
+      }
       const response = await axios.post(`${Server_URL}check-available-slots`, data);
       const { error, message, slots } = response.data;
       error ? alert(message) : setSlots(slots);
@@ -125,8 +126,14 @@ function BookingPage() {
         description: "Testing Payment Gateway",
         image: "https://i.pinimg.com/originals/c1/92/9d/c1929d3492c2f64ab65b43808c072043.jpg",
         handler: paymentHandler,
-        prefill: { name: "", email: "", contact: "" },
-        theme: { color: "#F46432" },
+        prefill: {
+          name: "",
+          email: "",
+          contact: "",
+        },
+        theme: {
+          color: "#F46432",
+        },
       };
 
       options.amount = (slotsSelectedByUser.length * value.price) * 100;
@@ -145,6 +152,7 @@ function BookingPage() {
       alert("Payment Failed");
     } else {
       let data = JSON.parse(localStorage.getItem("bookingData"))
+
       const token = utilityFunctions.getCookieValue('userAuthToken');
       const response = await axios.post(`${Server_URL}add-booking-details/${value._id}`, data, {
         headers: { Authorization: token ? `Bearer ${token}` : "" }
@@ -161,106 +169,198 @@ function BookingPage() {
   };
 
   return (
-    <>
-      <style>
-        {`
-          .container-background {
-            background: linear-gradient(135deg, #193e40, #132e4f);
-            padding-top: 60px;
-            padding-bottom: 60px;
-            min-height: 100vh;
-          }
+    <Container fluid className="container-background d-flex justify-content-center align-items-center min-vh-100">
+      <Row className="w-100 d-flex justify-content-center align-items-center">
+        <Col md={8} lg={6} className="d-flex justify-content-center">
+          <div className="form-container">
+            <h3 className="text-center mb-4 header-text">Add Booking Details</h3>
 
-          .form-container {
-            background-color: rgba(0, 40, 72, 0.9);
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            width: 100%;
-            max-width: 600px;
-          }
-
-          .header-text {
-            color: #FFFFFF;
-            font-weight: bold;
-            font-size: 24px;
-          }
-
-          .icon-container {
-            background-color: #FFFFFF;
-            border: none;
-          }
-
-          .input {
-            padding-left: 10px;
-          }
-
-          .button {
-            background: linear-gradient(135deg, #4E54C8, #132e4f);
-            color: #FFFFFF;
-            border: none;
-            padding: 12px;
-            font-size: 18px;
-          }
-
-          .text-area {
-            height: 80px;
-          }
-
-          .available {
-            color: green;
-          }
-
-          .booked {
-            color: red;
-          }
-        `}
-      </style>
-
-      <Container fluid className="container-background d-flex justify-content-center align-items-center min-vh-100">
-        <Row className="w-100 d-flex justify-content-center align-items-center">
-          <Col md={8} lg={6} className="d-flex justify-content-center">
-            <div className="form-container">
-              <h3 className="text-center mb-4 header-text">Add Booking Details</h3>
-              {user.map((x, index) => (
-                <form onSubmit={handleSubmit(handleFormSubmit)} key={index}>
-                  {/* Form Fields */}
-                  <div className="mb-3">
-                    <label>Contact Information:</label>
-                    <div className="input-group">
-                      <span className="input-group-text icon-container"><FaEnvelope /></span>
-                      <input
-                        {...register("email", { required: true, validate: (value) => /^[a-zA-Z0-9._%+-]+@gmail\.com$/.test(value.trim()) })}
-                        className="form-control input"
-                        type="email"
-                        defaultValue={x.email}
-                      />
-                    </div>
+            {user.map((x, index) => (
+              <form onSubmit={handleSubmit(handleFormSubmit)} key={index}>
+                <div className="mb-3">
+                  <label>Contact Information:</label>
+                  <div className="input-group">
+                    <span className="input-group-text icon-container"><FaEnvelope /></span>
+                    <input
+                      {...register("email", {
+                        required: true, validate: (value) => {
+                          const trimmedValue = value.trim();
+                          return /^[a-zA-Z0-9._%+-]+@gmail\.com$/.test(trimmedValue)
+                            ? true
+                            : "Only @gmail.com is allowed";
+                        },
+                        onChange: (e) => {
+                          e.target.value = e.target.value.trimStart();
+                        },
+                      })}
+                      className="form-control input"
+                      type="email"
+                      defaultValue={x.email}
+                    />
                   </div>
+                  {errors.email && <p className="text-danger">This field is required</p>}
+                </div>
 
-                  <div className="mb-3">
-                    <label>Mobile Number:</label>
-                    <div className="input-group">
-                      <span className="input-group-text icon-container"><FaPhone /></span>
-                      <input
-                        {...register("mobile", { required: true, validate: (value) => /^[0-9]{10}$/.test(value.trim()) })}
-                        className="form-control input"
-                        type="tel"
-                        defaultValue={x.mobile}
-                      />
-                    </div>
+                <div className="mb-3">
+                  <label>Mobile Number:</label>
+                  <div className="input-group">
+                    <span className="input-group-text icon-container"><FaPhone /></span>
+                    <input
+                      {...register("mobile", {
+                        required: true, validate: (value) => {
+                          const trimmedValue = value.trim();
+                          return /^[0-9]{10}$/.test(trimmedValue)
+                            ? true
+                            : "Enter a valid 10-digit mobile number without spaces";
+                        },
+                        onChange: (e) => {
+                          e.target.value = e.target.value.trimStart();
+                        },
+                      })}
+                      className="form-control input"
+                      type="tel"
+                      defaultValue={x.mobile}
+                    />
                   </div>
+                  {errors.mobile && <p className="text-danger">This field is required</p>}
+                </div>
 
-                  {/* Additional form fields */}
+                <div className="mb-3">
+                  <label>State:</label>
+                  <div className="input-group">
+                    <span className="input-group-text icon-container"><FaMapMarkerAlt /></span>
+                    <input
+                      {...register("state", { required: true })}
+                      className="form-control input"
+                      type="text"
+                      value={x.stateInfo}
+                      readOnly
+                    />
+                  </div>
+                  {errors.state && <p className="text-danger">This field is required</p>}
+                </div>
 
-                  <button type="submit" className="btn w-100 button">Pay-Now</button>
-                </form>
-              ))}
-            </div>
-          </Col>
-        </Row>
-      </Container>
-    </>
+                <div className="mb-3">
+                  <label>City:</label>
+                  <div className="input-group">
+                    <span className="input-group-text icon-container"><FaMapMarkerAlt /></span>
+                    <input
+                      {...register("city", { required: true })}
+                      className="form-control input"
+                      type="text"
+                      value={x.cityInfo}
+                      readOnly
+                    />
+                  </div>
+                  {errors.city && <p className="text-danger">This field is required</p>}
+                </div>
+
+                <div className="mb-3">
+                  <label>Pincode:</label>
+                  <div className="input-group">
+                    <span className="input-group-text icon-container"><FaMapMarkerAlt /></span>
+                    <input
+                      {...register("pincode", { required: true })}
+                      className="form-control input"
+                      type="text"
+                      value={x.pincode}
+                      readOnly
+                    />
+                  </div>
+                  {errors.pincode && <p className="text-danger">This field is required</p>}
+                </div>
+
+                <div className="mb-3">
+                  <label>Address:</label>
+                  <div className="input-group">
+                    <span className="input-group-text icon-container"><PiAddressBookFill /></span>
+                    <textarea
+                      {...register('address', {
+                        required: "Address is required",
+                        validate: (value) => {
+                          const trimmedValue = value.trim().replace(/\s+/g, " ");
+                          if (trimmedValue.length < 5) return "Address must be at least 5 characters";
+                          if (trimmedValue.length > 100) return "Address must not exceed 100 characters";
+                          return true;
+                        },
+                        onChange: (e) => {
+                          e.target.value = e.target.value.trimStart().replace(/\s+/g, " ");
+                        },
+                      })}
+                      className="form-control shadow text-area"
+                      defaultValue={x.address}
+                    ></textarea>
+                  </div>
+                  {errors.address && <p className="text-danger">This field is required</p>}
+                </div>
+
+                <div className="mb-3">
+                  <label>Select Booking Date</label>
+                  <div className="input-group">
+                    <span className="input-group-text icon-container"><BsFillCalendarDateFill /></span>
+                    <input
+                      type="date"
+                      min={minDate}
+                      className="form-control p-3"
+                      {...register("date", { required: true })}
+                      onChange={(e) => handleDateChange(e.target.value)}
+                    />
+                  </div>
+                  {errors.date && <p className="text-danger">This field is required</p>}
+                </div>
+
+                {slots.length > 0 && (
+                  <div className="mb-3">
+                    <hr />
+                    <h3 className="text-white">SlotAmount: {value.price}</h3>
+                    <label>Select Slots</label>
+                    <table className="table table-bordered">
+                      <thead>
+                        <tr className="text-capitalize">
+                          <th></th>
+                          <th className="text-white">Start Time</th>
+                          <th className="text-white">End Time</th>
+                          <th className="text-white">Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {slots.map((slot, i) => (
+                          <tr key={slot.start}>
+                            <td className="text-center text-white">
+                              {slot.available && (
+                                <input type="checkbox" {...register(`slots${i}`)} onChange={(e) => {
+                                  calculateGrandTotal(e, i)
+                                }} />
+                              )}
+                            </td>
+                            <td className="text-white">{slot.start}</td>
+                            <td className="text-white">{slot.end}</td>
+                            <td>
+                              {slot.available ? (
+                                <span className="badge bg-success">Available</span>
+                              ) : (
+                                <span className="badge bg-danger">Not Available</span>
+                              )}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                    <h3 className="text-end">
+                      Total Amount: <span className="badge bg-primary">{value.price * slotsSelectedByUser.length}</span>
+                    </h3>
+                  </div>
+                )}
+
+                <div className="d-flex justify-content-between mt-4">
+                  <button type="submit" className="btn btn-warning">Proceed to Payment</button>
+                </div>
+              </form>
+            ))}
+          </div>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 
