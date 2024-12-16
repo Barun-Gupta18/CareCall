@@ -43,7 +43,7 @@ function Footer() {
                   <h2 className="footer-section">address</h2>
                   <ul className="footer-link">
                     <li><i className="fa fa-envelope-open"></i><span>House no.122(c), Amritsar-1 </span></li>
-                    <li><i className="fa fa-phone "></i><span>(000) 999 9999</span></li>
+                    <li><i className="fa fa-phone "></i><span>(000) 000 0000</span></li>
                     <li><i className="fa fa-envelope-open"></i><span>CareCall@gmail.com</span></li>
                     <li><i className="fa fa-clock-o"></i><span>Sat - Fry: 9:00 am- 6:00pm</span></li>
                   </ul>
