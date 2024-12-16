@@ -105,229 +105,138 @@ function AdminDashboard() {
     }
   };
 
-
   const styles = {
-    tableContainer: {
-      overflowX: 'auto',
+    dashboard: {
+      paddingTop: '120px',
+      paddingBottom: '120px',
+      backgroundImage: 'url("/assets/img/bg/6.jpg")',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      textAlign: 'center',
     },
-    table: {
+    statsCards: {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+      gap: '20px',
+      marginBottom: '40px',
+    },
+    card: {
+      backgroundColor: '#1d3557',
+      color: '#fff',
+      padding: '20px',
+      borderRadius: '12px',
+      boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+      display: 'flex',
+      alignItems: 'center',
+      transition: 'transform 0.3s, box-shadow 0.3s',
+    },
+    cardHover: {
+      transform: 'translateY(-5px)',
+      boxShadow: '0 6px 12px rgba(0, 0, 0, 0.3)',
+    },
+    icon: {
+      fontSize: '2.5rem',
+      marginRight: '15px',
+      color: '#f1faee',
+    },
+    cardInfo: {
+      color: '#f1faee',
+    },
+    bookingsTable: {
       width: '100%',
       borderCollapse: 'collapse',
     },
-    th: {
+    tableCell: {
       textAlign: 'left',
       padding: '10px',
       border: '1px solid #ddd',
     },
-    td: {
-      padding: '10px',
-      border: '1px solid #ddd',
+    tableHeader: {
+      background: '#f4f4f4',
     },
-    noData: {
-      padding: '10px',
-      border: '1px solid #ddd',
-      textAlign: 'center',
-    },
-    responsiveRow: {
-      display: 'flex',
-      flexDirection: 'column',
-      border: '1px solid #ddd',
-      marginBottom: '10px',
-    },
-    responsiveCell: {
-      display: 'flex',
-      justifyContent: 'space-between',
-      padding: '5px',
-      border: '1px solid #ddd',
-    },
-    responsiveCellLabel: {
-      fontWeight: 'bold',
-      flex: 1,
+    tableRowEven: {
+      background: '#f9f9f9',
     },
   };
 
-  const BookingTable = ({ bookings, getStatusColor }) => {
-    const isSmallScreen = window.innerWidth <= 768;
+  return (
+    <>
+      <div style={styles.dashboard}>
+        <h2>Dashboard</h2>
+      </div>
 
-
-    return (
-      <>
-        <div style={{
-          paddingTop: '120px',
-          paddingBottom: '120px',
-          backgroundImage: 'url("/assets/img/bg/6.jpg")',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          textAlign: 'center',
-        }}>
-          <h2>Dashboard</h2>
+      <div style={{ padding: '20px' }}>
+        <div style={styles.statsCards}>
+          {[{
+            icon: <FaClipboardList style={styles.icon} />,
+            title: 'Total Services',
+            value: category,
+          }, {
+            icon: <FaTools style={styles.icon} />,
+            title: 'Total Sub-Services',
+            value: subcategory,
+          }, {
+            icon: <FaUsers style={styles.icon} />,
+            title: 'Total Partners',
+            value: partner,
+          }, {
+            icon: <FaShoppingCart style={styles.icon} />,
+            title: 'Total Orders',
+            value: order,
+          }, {
+            icon: <FaDollarSign style={styles.icon} />,
+            title: 'Total Income',
+            value: `$${income}`,
+          }].map((card, index) => (
+            <div
+              key={index}
+              style={{ ...styles.card }}
+              onMouseEnter={(e) => e.currentTarget.style = { ...styles.card, ...styles.cardHover }}
+              onMouseLeave={(e) => e.currentTarget.style = styles.card}
+            >
+              {card.icon}
+              <div>
+                <h4 style={{ marginBottom: '8px', fontSize: '1.2rem', fontWeight: '500' }}>{card.title}</h4>
+                <p style={{ fontSize: '1.5rem', fontWeight: 'bold', margin: '0' }}>{card.value}</p>
+              </div>
+            </div>
+          ))}
         </div>
 
-        <div style={{ padding: '20px' }}>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-            gap: '20px',
-            marginBottom: '40px',
-          }}>
-            <div style={{
-              backgroundColor: '#1d3557',
-              color: '#fff',
-              padding: '20px',
-              borderRadius: '12px',
-              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-              display: 'flex',
-              alignItems: 'center',
-              transition: 'transform 0.3s, box-shadow 0.3s',
-            }}>
-              <FaClipboardList style={{ fontSize: '2.5rem', marginRight: '15px', color: '#f1faee' }} />
-              <div>
-                <h4 style={{ marginBottom: '8px', color: '#f1faee', fontSize: '1.2rem', fontWeight: '500' }}>Total Services</h4>
-                <p style={{ fontSize: '1.5rem', color: '#f1faee', fontWeight: 'bold', margin: '0' }}>{category}</p>
-              </div>
-            </div>
-            <div style={{
-              backgroundColor: '#1d3557',
-              color: '#fff',
-              padding: '20px',
-              borderRadius: '12px',
-              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-              display: 'flex',
-              alignItems: 'center',
-              transition: 'transform 0.3s, box-shadow 0.3s',
-            }}>
-              <FaTools style={{ fontSize: '2.5rem', marginRight: '15px', color: '#f1faee' }} />
-              <div>
-                <h4 style={{ marginBottom: '8px', color: '#f1faee', fontSize: '1.2rem', fontWeight: '500' }}>Total Sub-Services</h4>
-                <p style={{ fontSize: '1.5rem', color: '#f1faee', fontWeight: 'bold', margin: '0' }}>{subcategory}</p>
-              </div>
-            </div>
-            <div style={{
-              backgroundColor: '#1d3557',
-              color: '#fff',
-              padding: '20px',
-              borderRadius: '12px',
-              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-              display: 'flex',
-              alignItems: 'center',
-              transition: 'transform 0.3s, box-shadow 0.3s',
-            }}>
-              <FaUsers style={{ fontSize: '2.5rem', marginRight: '15px', color: '#f1faee' }} />
-              <div>
-                <h4 style={{ marginBottom: '8px', color: '#f1faee', fontSize: '1.2rem', fontWeight: '500' }}>Total Partners</h4>
-                <p style={{ fontSize: '1.5rem', color: '#f1faee', fontWeight: 'bold', margin: '0' }}>{partner}</p>
-              </div>
-            </div>
-            <div style={{
-              backgroundColor: '#1d3557',
-              color: '#fff',
-              padding: '20px',
-              borderRadius: '12px',
-              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-              display: 'flex',
-              alignItems: 'center',
-              transition: 'transform 0.3s, box-shadow 0.3s',
-            }}>
-              <FaShoppingCart style={{ fontSize: '2.5rem', marginRight: '15px', color: '#f1faee' }} />
-              <div>
-                <h4 style={{ marginBottom: '8px', color: '#f1faee', fontSize: '1.2rem', fontWeight: '500' }}>Total Orders</h4>
-                <p style={{ fontSize: '1.5rem', color: '#f1faee', fontWeight: 'bold', margin: '0' }}>{order}</p>
-              </div>
-            </div>
-            <div style={{
-              backgroundColor: '#1d3557',
-              color: '#fff',
-              padding: '20px',
-              borderRadius: '12px',
-              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-              display: 'flex',
-              alignItems: 'center',
-              transition: 'transform 0.3s, box-shadow 0.3s',
-            }}>
-              <FaDollarSign style={{ fontSize: '2.5rem', marginRight: '15px', color: '#f1faee' }} />
-              <div>
-                <h4 style={{ marginBottom: '8px', color: '#f1faee', fontSize: '1.2rem', fontWeight: '500' }}>Total Income</h4>
-                <p style={{ fontSize: '1.5rem', color: '#f1faee', fontWeight: 'bold', margin: '0' }}>${income}</p>
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <h3>Bookings</h3>
-            <div style={styles.tableContainer}>
-              <table style={styles.table}>
-                {!isSmallScreen && (
-                  <thead>
-                    <tr>
-                      <th style={styles.th}>S.no</th>
-                      <th style={styles.th}>Service</th>
-                      <th style={styles.th}>Customer</th>
-                      <th style={styles.th}>Partner</th>
-                      <th style={styles.th}>Date</th>
-                      <th style={styles.th}>Status</th>
-                    </tr>
-                  </thead>
-                )}
-                <tbody>
-                  {bookings.length > 0 ? (
-                    bookings.slice(0, 10).map((booking, index) =>
-                      isSmallScreen ? (
-                        <tr key={index} style={styles.responsiveRow}>
-                          <td style={styles.responsiveCell}>
-                            <span style={styles.responsiveCellLabel}>S.no:</span>
-                            {index + 1}
-                          </td>
-                          <td style={styles.responsiveCell}>
-                            <span style={styles.responsiveCellLabel}>Service:</span>
-                            {booking.categoryInfo}
-                          </td>
-                          <td style={styles.responsiveCell}>
-                            <span style={styles.responsiveCellLabel}>Customer:</span>
-                            {booking.userName}
-                          </td>
-                          <td style={styles.responsiveCell}>
-                            <span style={styles.responsiveCellLabel}>Partner:</span>
-                            {booking.partnerName}
-                          </td>
-                          <td style={styles.responsiveCell}>
-                            <span style={styles.responsiveCellLabel}>Date:</span>
-                            {booking.date}
-                          </td>
-                          <td style={styles.responsiveCell}>
-                            <span style={styles.responsiveCellLabel}>Status:</span>
-                            <span style={{ color: getStatusColor(booking.status) }}>
-                              {booking.status}
-                            </span>
-                          </td>
-                        </tr>
-                      ) : (
-                        <tr key={index}>
-                          <td style={styles.td}>{index + 1}</td>
-                          <td style={styles.td}>{booking.categoryInfo}</td>
-                          <td style={styles.td}>{booking.userName}</td>
-                          <td style={styles.td}>{booking.partnerName}</td>
-                          <td style={styles.td}>{booking.date}</td>
-                          <td style={{ ...styles.td, color: getStatusColor(booking.status) }}>
-                            {booking.status}
-                          </td>
-                        </tr>
-                      )
-                    )
-                  ) : (
-                    <tr>
-                      <td colSpan="6" style={styles.noData}>
-                        No bookings available
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
-            </div>
-          </div>
+        <div>
+          <h3>Bookings</h3>
+          <table style={styles.bookingsTable}>
+            <thead>
+              <tr>
+                <th style={styles.tableCell}>S.no</th>
+                <th style={styles.tableCell}>Service</th>
+                <th style={styles.tableCell}>Customer</th>
+                <th style={styles.tableCell}>Partner</th>
+                <th style={styles.tableCell}>Date</th>
+                <th style={styles.tableCell}>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {bookings.length > 0 ? (
+                bookings.slice(0, 10).map((booking, index) => (
+                  <tr key={index} style={index % 2 === 0 ? styles.tableRowEven : {}}>
+                    <td style={styles.tableCell}>{index + 1}</td>
+                    <td style={styles.tableCell}>{booking.categoryInfo}</td>
+                    <td style={styles.tableCell}>{booking.userName}</td>
+                    <td style={styles.tableCell}>{booking.partnerName}</td>
+                    <td style={styles.tableCell}>{booking.date}</td>
+                    <td style={{ ...styles.tableCell, color: getStatusColor(booking.status) }}>{booking.status}</td>
+                  </tr>
+                ))
+              ) : (
+                <tr><td colSpan="6" style={styles.tableCell}>No bookings available</td></tr>
+              )}
+            </tbody>
+          </table>
         </div>
-      </>
-    );
-  }
+      </div>
+    </>
+  );
 }
 
 export default AdminDashboard;
