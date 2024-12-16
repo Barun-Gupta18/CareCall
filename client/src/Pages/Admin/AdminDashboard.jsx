@@ -105,135 +105,197 @@ function AdminDashboard() {
     }
   };
 
-  const styles = {
-    dashboard: {
-      paddingTop: '120px',
-      paddingBottom: '120px',
-      backgroundImage: 'url("/assets/img/bg/6.jpg")',
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      textAlign: 'center',
-    },
-    statsCards: {
-      display: 'grid',
-      gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-      gap: '20px',
-      marginBottom: '40px',
-    },
-    card: {
-      backgroundColor: '#1d3557',
-      color: '#fff',
-      padding: '20px',
-      borderRadius: '12px',
-      boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-      display: 'flex',
-      alignItems: 'center',
-      transition: 'transform 0.3s, box-shadow 0.3s',
-    },
-    cardHover: {
-      transform: 'translateY(-5px)',
-      boxShadow: '0 6px 12px rgba(0, 0, 0, 0.3)',
-    },
-    icon: {
-      fontSize: '2.5rem',
-      marginRight: '15px',
-      color: '#f1faee',
-    },
-    cardInfo: {
-      color: '#f1faee',
-    },
-    bookingsTable: {
-      width: '100%',
-      borderCollapse: 'collapse',
-    },
-    tableCell: {
-      textAlign: 'left',
-      padding: '10px',
-      border: '1px solid #ddd',
-    },
-    tableHeader: {
-      background: '#f4f4f4',
-    },
-    tableRowEven: {
-      background: '#f9f9f9',
-    },
-  };
-
   return (
     <>
-      <div style={styles.dashboard}>
+      <div style={{
+        paddingTop: '120px',
+        paddingBottom: '120px',
+        backgroundImage: 'url("/assets/img/bg/6.jpg")',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        textAlign: 'center',
+      }}>
         <h2>Dashboard</h2>
       </div>
 
       <div style={{ padding: '20px' }}>
-        <div style={styles.statsCards}>
-          {[{
-            icon: <FaClipboardList style={styles.icon} />,
-            title: 'Total Services',
-            value: category,
-          }, {
-            icon: <FaTools style={styles.icon} />,
-            title: 'Total Sub-Services',
-            value: subcategory,
-          }, {
-            icon: <FaUsers style={styles.icon} />,
-            title: 'Total Partners',
-            value: partner,
-          }, {
-            icon: <FaShoppingCart style={styles.icon} />,
-            title: 'Total Orders',
-            value: order,
-          }, {
-            icon: <FaDollarSign style={styles.icon} />,
-            title: 'Total Income',
-            value: `$${income}`,
-          }].map((card, index) => (
-            <div
-              key={index}
-              style={{ ...styles.card }}
-              onMouseEnter={(e) => e.currentTarget.style = { ...styles.card, ...styles.cardHover }}
-              onMouseLeave={(e) => e.currentTarget.style = styles.card}
-            >
-              {card.icon}
-              <div>
-                <h4 style={{ marginBottom: '8px', fontSize: '1.2rem', fontWeight: '500' }}>{card.title}</h4>
-                <p style={{ fontSize: '1.5rem', fontWeight: 'bold', margin: '0' }}>{card.value}</p>
-              </div>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+          gap: '20px',
+          marginBottom: '40px',
+        }}>
+          <div style={{
+            backgroundColor: '#1d3557',
+            color: '#fff',
+            padding: '20px',
+            borderRadius: '12px',
+            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+            display: 'flex',
+            alignItems: 'center',
+            transition: 'transform 0.3s, box-shadow 0.3s',
+          }}>
+            <FaClipboardList style={{ fontSize: '2.5rem', marginRight: '15px', color: '#f1faee' }} />
+            <div>
+              <h4 style={{ marginBottom: '8px', color: '#f1faee', fontSize: '1.2rem', fontWeight: '500' }}>Total Services</h4>
+              <p style={{ fontSize: '1.5rem', color: '#f1faee', fontWeight: 'bold', margin: '0' }}>{category}</p>
             </div>
-          ))}
+          </div>
+          <div style={{
+            backgroundColor: '#1d3557',
+            color: '#fff',
+            padding: '20px',
+            borderRadius: '12px',
+            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+            display: 'flex',
+            alignItems: 'center',
+            transition: 'transform 0.3s, box-shadow 0.3s',
+          }}>
+            <FaTools style={{ fontSize: '2.5rem', marginRight: '15px', color: '#f1faee' }} />
+            <div>
+              <h4 style={{ marginBottom: '8px', color: '#f1faee', fontSize: '1.2rem', fontWeight: '500' }}>Total Sub-Services</h4>
+              <p style={{ fontSize: '1.5rem', color: '#f1faee', fontWeight: 'bold', margin: '0' }}>{subcategory}</p>
+            </div>
+          </div>
+          <div style={{
+            backgroundColor: '#1d3557',
+            color: '#fff',
+            padding: '20px',
+            borderRadius: '12px',
+            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+            display: 'flex',
+            alignItems: 'center',
+            transition: 'transform 0.3s, box-shadow 0.3s',
+          }}>
+            <FaUsers style={{ fontSize: '2.5rem', marginRight: '15px', color: '#f1faee' }} />
+            <div>
+              <h4 style={{ marginBottom: '8px', color: '#f1faee', fontSize: '1.2rem', fontWeight: '500' }}>Total Partners</h4>
+              <p style={{ fontSize: '1.5rem', color: '#f1faee', fontWeight: 'bold', margin: '0' }}>{partner}</p>
+            </div>
+          </div>
+          <div style={{
+            backgroundColor: '#1d3557',
+            color: '#fff',
+            padding: '20px',
+            borderRadius: '12px',
+            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+            display: 'flex',
+            alignItems: 'center',
+            transition: 'transform 0.3s, box-shadow 0.3s',
+          }}>
+            <FaShoppingCart style={{ fontSize: '2.5rem', marginRight: '15px', color: '#f1faee' }} />
+            <div>
+              <h4 style={{ marginBottom: '8px', color: '#f1faee', fontSize: '1.2rem', fontWeight: '500' }}>Total Orders</h4>
+              <p style={{ fontSize: '1.5rem', color: '#f1faee', fontWeight: 'bold', margin: '0' }}>{order}</p>
+            </div>
+          </div>
+          <div style={{
+            backgroundColor: '#1d3557',
+            color: '#fff',
+            padding: '20px',
+            borderRadius: '12px',
+            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+            display: 'flex',
+            alignItems: 'center',
+            transition: 'transform 0.3s, box-shadow 0.3s',
+          }}>
+            <FaDollarSign style={{ fontSize: '2.5rem', marginRight: '15px', color: '#f1faee' }} />
+            <div>
+              <h4 style={{ marginBottom: '8px', color: '#f1faee', fontSize: '1.2rem', fontWeight: '500' }}>Total Income</h4>
+              <p style={{ fontSize: '1.5rem', color: '#f1faee', fontWeight: 'bold', margin: '0' }}>${income}</p>
+            </div>
+          </div>
         </div>
 
         <div>
           <h3>Bookings</h3>
-          <table style={styles.bookingsTable}>
-            <thead>
-              <tr>
-                <th style={styles.tableCell}>S.no</th>
-                <th style={styles.tableCell}>Service</th>
-                <th style={styles.tableCell}>Customer</th>
-                <th style={styles.tableCell}>Partner</th>
-                <th style={styles.tableCell}>Date</th>
-                <th style={styles.tableCell}>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {bookings.length > 0 ? (
-                bookings.slice(0, 10).map((booking, index) => (
-                  <tr key={index} style={index % 2 === 0 ? styles.tableRowEven : {}}>
-                    <td style={styles.tableCell}>{index + 1}</td>
-                    <td style={styles.tableCell}>{booking.categoryInfo}</td>
-                    <td style={styles.tableCell}>{booking.userName}</td>
-                    <td style={styles.tableCell}>{booking.partnerName}</td>
-                    <td style={styles.tableCell}>{booking.date}</td>
-                    <td style={{ ...styles.tableCell, color: getStatusColor(booking.status) }}>{booking.status}</td>
+          <div style={{
+            overflowX: 'auto',
+            marginBottom: '20px',
+            border: '1px solid #ddd',
+            borderRadius: '8px',
+            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'
+          }}>
+            <table style={{
+              width: '100%',
+              borderCollapse: 'collapse',
+              minWidth: '600px',
+              backgroundColor: '#f9f9f9'
+            }}>
+              <thead>
+                <tr>
+                  <th style={{
+                    textAlign: 'left',
+                    padding: '10px',
+                    border: '1px solid #ddd',
+                    backgroundColor: '#1d3557',
+                    color: '#fff'
+                  }}>S.no</th>
+                  <th style={{
+                    textAlign: 'left',
+                    padding: '10px',
+                    border: '1px solid #ddd',
+                    backgroundColor: '#1d3557',
+                    color: '#fff'
+                  }}>Service</th>
+                  <th style={{
+                    textAlign: 'left',
+                    padding: '10px',
+                    border: '1px solid #ddd',
+                    backgroundColor: '#1d3557',
+                    color: '#fff'
+                  }}>Customer</th>
+                  <th style={{
+                    textAlign: 'left',
+                    padding: '10px',
+                    border: '1px solid #ddd',
+                    backgroundColor: '#1d3557',
+                    color: '#fff'
+                  }}>Partner</th>
+                  <th style={{
+                    textAlign: 'left',
+                    padding: '10px',
+                    border: '1px solid #ddd',
+                    backgroundColor: '#1d3557',
+                    color: '#fff'
+                  }}>Date</th>
+                  <th style={{
+                    textAlign: 'left',
+                    padding: '10px',
+                    border: '1px solid #ddd',
+                    backgroundColor: '#1d3557',
+                    color: '#fff'
+                  }}>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {bookings.length > 0 ? (
+                  bookings.slice(0, 10).map((booking, index) => (
+                    <tr key={index}>
+                      <td style={{ padding: '10px', border: '1px solid #ddd' }}>{index + 1}</td>
+                      <td style={{ padding: '10px', border: '1px solid #ddd' }}>{booking.categoryInfo}</td>
+                      <td style={{ padding: '10px', border: '1px solid #ddd' }}>{booking.userName}</td>
+                      <td style={{ padding: '10px', border: '1px solid #ddd' }}>{booking.partnerName}</td>
+                      <td style={{ padding: '10px', border: '1px solid #ddd' }}>{booking.date}</td>
+                      <td style={{
+                        padding: '10px',
+                        border: '1px solid #ddd',
+                        color: getStatusColor(booking.status)
+                      }}>{booking.status}</td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="6" style={{ padding: '10px', border: '1px solid #ddd', textAlign: 'center' }}>
+                      No bookings available
+                    </td>
                   </tr>
-                ))
-              ) : (
-                <tr><td colSpan="6" style={styles.tableCell}>No bookings available</td></tr>
-              )}
-            </tbody>
-          </table>
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
+
       </div>
     </>
   );
